@@ -87,7 +87,7 @@
         <InterfaceName>PDI</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.ispmk2</ToolType>
-      <ToolNumber>000200191656</ToolNumber>
+      <ToolNumber>000200199695</ToolNumber>
       <ToolName>AVRISP mkII</ToolName>
     </com_atmel_avrdbg_tool_ispmk2>
   </PropertyGroup>
@@ -465,6 +465,12 @@
     <Compile Include="mainTask.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MyDrivers\clksys_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MyDrivers\clksys_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="MyDrivers\port_driver.c">
       <SubType>compile</SubType>
     </Compile>
@@ -496,6 +502,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MyDrivers\usart_driver_RTOS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi_memory_25lcxx.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi_memory_25lcxx.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="system.c">

@@ -16,20 +16,16 @@
 #include "csp_clock.h"
 #include "csp_if_i2c.h"
 
-// LEDs
-#define	YELLOW	IOPORT_CREATE_PIN(PORTA, 0)
-#define	RED		IOPORT_CREATE_PIN(PORTA, 4)
-	
-/* -------------------------------------------------------------------- */
-/*	Macros for manipulating with LEDs									*/
-/* -------------------------------------------------------------------- */
-#define led_yellow_on()		ioport_set_pin_level(YELLOW, true)
-#define led_yellow_off()	ioport_set_pin_level(YELLOW, false)
-#define led_yellow_toggle()	ioport_toggle_pin_level(YELLOW)
-#define led_red_on()		ioport_set_pin_level(RED, true)
-#define led_red_off()		ioport_set_pin_level(RED, false)
-#define led_red_toggle()	ioport_toggle_pin_level(RED)
 
+// POWER_SWITCH on PORTE.3
+#define	POWER_SWITCH			IOPORT_CREATE_PIN(PORTE, 3)
+#define	MEM_CS					IOPORT_CREATE_PIN(PORTC, 4)
+#define	MEM_WP					IOPORT_CREATE_PIN(PORTC, 3)
+
+#define power_switch_on()		ioport_set_pin_level(POWER_SWITCH, false)
+#define power_switch_off()		ioport_set_pin_level(POWER_SWITCH, true)
+#define power_switch_toggle()	ioport_toggle_pin_level(POWER_SWITCH)
+	
 /* -------------------------------------------------------------------- */
 /*	RTC																	*/
 /* -------------------------------------------------------------------- */
@@ -41,5 +37,7 @@ extern volatile uint32_t hoursTimer;
 /*	Initialize the xMega peripherals									*/
 /* -------------------------------------------------------------------- */
 void boardInit();
+void timerRTC(void *p);
+void enable_xtal(void);
 
 #endif /* SYSTEM_H_ */

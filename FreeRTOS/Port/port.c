@@ -331,15 +331,15 @@ void vPortYield(void) {
 /*-----------------------------------------------------------*/
 
 /*
- * Setup timer 1 compare match A to generate a tick interrupt.
+ * Setup timer 0 compare match A to generate a tick interrupt.
  */
 static void prvSetupTimerInterrupt(void) {
     //Use TCC0 as a tick counter. If this is to be changed, change ISR as well
     TC0_t * tickTimer = &TCC0;
     //select the clock source and pre-scale by 64
-    TC0_ConfigClockSource(tickTimer, TC_CLKSEL_DIV64_gc);
+    TC0_ConfigClockSource(tickTimer, TC_CLKSEL_DIV1_gc);
     //set period of counter
-    tickTimer->PER = configCPU_CLOCK_HZ / configTICK_RATE_HZ / 64 - 1;
+    tickTimer->PER = configCPU_CLOCK_HZ / configTICK_RATE_HZ - 1;
 
     //enable interrupt and set low level
     TC0_SetOverflowIntLevel(tickTimer, TC_OVFINTLVL_LO_gc);

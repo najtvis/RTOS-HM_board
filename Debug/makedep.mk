@@ -72,6 +72,8 @@ main.c
 
 mainTask.c
 
+MyDrivers\clksys_driver.c
+
 MyDrivers\port_driver.c
 
 MyDrivers\TC_driver.c
@@ -81,6 +83,8 @@ MyDrivers\twi_master_driver.c
 MyDrivers\twi_slave_driver.c
 
 MyDrivers\usart_driver_RTOS.c
+
+spi_memory_25lcxx.c
 
 system.c
 

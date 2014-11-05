@@ -86,10 +86,12 @@ milisecondsTimer    0x4               system.o
 usartBufferF        0x2               MyDrivers/usart_driver_RTOS.o
 usartBufferE        0x2               MyDrivers/usart_driver_RTOS.o
 twi_csp_master      0x52              csp_interface.o
+xTimers             0x2               system.o
 callbackFunction    0x2               csp_interface.o
 secondsTimer        0x4               system.o
 usartBufferD        0x2               MyDrivers/usart_driver_RTOS.o
 outcomingPacket     0x2               mainTask.o
+buffer_memory       0x20              spi_memory_25lcxx.o
 __iob               0x6               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(iob.o)
 usartBufferC        0x2               MyDrivers/usart_driver_RTOS.o
 
@@ -178,8 +180,6 @@ Discarded input sections
                 0x00000000        0x2 FreeRTOS/Source/tasks.o
  .text          0x00000000        0x0 FreeRTOS/Source/timers.o
  .bss           0x00000000        0x0 FreeRTOS/Source/timers.o
- .text.xTimerCreate
-                0x00000000       0x70 FreeRTOS/Source/timers.o
  .text.xTimerIsTimerActive
                 0x00000000       0x1a FreeRTOS/Source/timers.o
  .text.pvTimerGetTimerID
@@ -396,6 +396,20 @@ Discarded input sections
  .bss           0x00000000        0x0 main.o
  .text          0x00000000        0x0 mainTask.o
  .bss           0x00000000        0x0 mainTask.o
+ .text          0x00000000        0x0 MyDrivers/clksys_driver.o
+ .bss           0x00000000        0x0 MyDrivers/clksys_driver.o
+ .text.CLKSYS_PLL_Config
+                0x00000000        0xc MyDrivers/clksys_driver.o
+ .text.CLKSYS_Prescalers_Config
+                0x00000000        0xc MyDrivers/clksys_driver.o
+ .text.CLKSYS_RTC_ClockSource_Enable
+                0x00000000       0x10 MyDrivers/clksys_driver.o
+ .text.CLKSYS_AutoCalibration_Enable
+                0x00000000       0x3e MyDrivers/clksys_driver.o
+ .text.CLKSYS_XOSC_FailureDetection_Enable
+                0x00000000        0xc MyDrivers/clksys_driver.o
+ .text.CLKSYS_Configuration_Lock
+                0x00000000        0xc MyDrivers/clksys_driver.o
  .text          0x00000000        0x0 MyDrivers/port_driver.o
  .bss           0x00000000        0x0 MyDrivers/port_driver.o
  .text.PORT_ConfigureInterrupt0
@@ -406,6 +420,8 @@ Discarded input sections
                 0x00000000       0x32 MyDrivers/port_driver.o
  .text          0x00000000        0x0 MyDrivers/TC_driver.o
  .bss           0x00000000        0x0 MyDrivers/TC_driver.o
+ .text.TC1_ConfigClockSource
+                0x00000000        0xc MyDrivers/TC_driver.o
  .text.TC0_ConfigWGM
                 0x00000000        0xc MyDrivers/TC_driver.o
  .text.TC1_ConfigWGM
@@ -422,6 +438,8 @@ Discarded input sections
                 0x00000000        0xe MyDrivers/TC_driver.o
  .text.TC1_DisableCCChannels
                 0x00000000        0xe MyDrivers/TC_driver.o
+ .text.TC1_SetOverflowIntLevel
+                0x00000000        0xc MyDrivers/TC_driver.o
  .text.TC0_SetErrorIntLevel
                 0x00000000        0xc MyDrivers/TC_driver.o
  .text.TC1_SetErrorIntLevel
@@ -476,6 +494,37 @@ Discarded input sections
                 0x00000000       0x40 MyDrivers/usart_driver_RTOS.o
  .text.USART_DataRegEmpty
                 0x00000000       0x58 MyDrivers/usart_driver_RTOS.o
+ .text          0x00000000        0x0 spi_memory_25lcxx.o
+ .bss           0x00000000        0x0 spi_memory_25lcxx.o
+ .text.spi_mem_init
+                0x00000000       0x1c spi_memory_25lcxx.o
+ .text.memory_send
+                0x00000000        0xe spi_memory_25lcxx.o
+ .text.spi_mem_write_page
+                0x00000000       0x84 spi_memory_25lcxx.o
+ .text.spi_mem_write_word
+                0x00000000       0x64 spi_memory_25lcxx.o
+ .text.spi_mem_write_byte
+                0x00000000       0x58 spi_memory_25lcxx.o
+ .text.spi_mem_write_complex
+                0x00000000       0xde spi_memory_25lcxx.o
+ .text.memory_read
+                0x00000000       0x16 spi_memory_25lcxx.o
+ .text.spi_mem_read_page
+                0x00000000       0x5e spi_memory_25lcxx.o
+ .text.spi_mem_read_word
+                0x00000000       0x5c spi_memory_25lcxx.o
+ .text.spi_mem_read_byte
+                0x00000000       0x46 spi_memory_25lcxx.o
+ .text.spi_mem_read_complex
+                0x00000000       0xd2 spi_memory_25lcxx.o
+ .text.memory_read_status
+                0x00000000       0x22 spi_memory_25lcxx.o
+ .text.memory_ready_write
+                0x00000000        0xa spi_memory_25lcxx.o
+ .text.memory_unprotect
+                0x00000000       0x2e spi_memory_25lcxx.o
+ COMMON         0x00000000       0x20 spi_memory_25lcxx.o
  .text          0x00000000        0x0 system.o
  .bss           0x00000000        0x0 system.o
  .text          0x00000000        0x0 src/ASF/common/services/clock/xmega/sysclk.o
@@ -840,11 +889,13 @@ LOAD libscp/src/transport/csp_rdp.o
 LOAD libscp/src/transport/csp_udp.o
 LOAD main.o
 LOAD mainTask.o
+LOAD MyDrivers/clksys_driver.o
 LOAD MyDrivers/port_driver.o
 LOAD MyDrivers/TC_driver.o
 LOAD MyDrivers/twi_master_driver.o
 LOAD MyDrivers/twi_slave_driver.o
 LOAD MyDrivers/usart_driver_RTOS.o
+LOAD spi_memory_25lcxx.o
 LOAD system.o
 LOAD src/ASF/common/services/clock/xmega/sysclk.o
 LOAD src/ASF/common/services/ioport/xmega/ioport_compat.o
@@ -951,7 +1002,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x5a2c
+.text           0x00000000     0x5ad2
  *(.vectors)
  .vectors       0x00000000      0x1fc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7/crtx128a4u.o
                 0x00000000                __vector_default
@@ -1295,416 +1346,431 @@ END GROUP
  .text.xTimerCreateTimerTask
                 0x00002036       0x50 FreeRTOS/Source/timers.o
                 0x00002036                xTimerCreateTimerTask
+ .text.xTimerCreate
+                0x00002086       0x6e FreeRTOS/Source/timers.o
+                0x00002086                xTimerCreate
  .text.xTimerGenericCommand
-                0x00002086       0x88 FreeRTOS/Source/timers.o
-                0x00002086                xTimerGenericCommand
+                0x000020f4       0x88 FreeRTOS/Source/timers.o
+                0x000020f4                xTimerGenericCommand
  .text.prvSampleTimeNow
-                0x0000210e       0xe0 FreeRTOS/Source/timers.o
+                0x0000217c       0xe0 FreeRTOS/Source/timers.o
  .text.prvTimerTask
-                0x000021ee      0x19a FreeRTOS/Source/timers.o
+                0x0000225c      0x19a FreeRTOS/Source/timers.o
  .text.csp_malloc
-                0x00002388        0x6 libscp/src/arch/freertos/csp_malloc.o
-                0x00002388                csp_malloc
+                0x000023f6        0x6 libscp/src/arch/freertos/csp_malloc.o
+                0x000023f6                csp_malloc
  .text.csp_free
-                0x0000238e        0x6 libscp/src/arch/freertos/csp_malloc.o
-                0x0000238e                csp_free
+                0x000023fc        0x6 libscp/src/arch/freertos/csp_malloc.o
+                0x000023fc                csp_free
  .text.csp_queue_create
-                0x00002394        0x6 libscp/src/arch/freertos/csp_queue.o
-                0x00002394                csp_queue_create
+                0x00002402        0x6 libscp/src/arch/freertos/csp_queue.o
+                0x00002402                csp_queue_create
  .text.csp_queue_enqueue
-                0x0000239a       0x16 libscp/src/arch/freertos/csp_queue.o
-                0x0000239a                csp_queue_enqueue
+                0x00002408       0x16 libscp/src/arch/freertos/csp_queue.o
+                0x00002408                csp_queue_enqueue
  .text.csp_queue_enqueue_isr
-                0x000023b0        0xe libscp/src/arch/freertos/csp_queue.o
-                0x000023b0                csp_queue_enqueue_isr
+                0x0000241e        0xe libscp/src/arch/freertos/csp_queue.o
+                0x0000241e                csp_queue_enqueue_isr
  .text.csp_queue_dequeue
-                0x000023be       0x16 libscp/src/arch/freertos/csp_queue.o
-                0x000023be                csp_queue_dequeue
+                0x0000242c       0x16 libscp/src/arch/freertos/csp_queue.o
+                0x0000242c                csp_queue_dequeue
  .text.csp_queue_size
-                0x000023d4        0x8 libscp/src/arch/freertos/csp_queue.o
-                0x000023d4                csp_queue_size
+                0x00002442        0x8 libscp/src/arch/freertos/csp_queue.o
+                0x00002442                csp_queue_size
  .text.csp_mutex_create
-                0x000023dc       0x22 libscp/src/arch/freertos/csp_semaphore.o
-                0x000023dc                csp_mutex_create
+                0x0000244a       0x22 libscp/src/arch/freertos/csp_semaphore.o
+                0x0000244a                csp_mutex_create
  .text.csp_bin_sem_create
-                0x000023fe       0x2e libscp/src/arch/freertos/csp_semaphore.o
-                0x000023fe                csp_bin_sem_create
+                0x0000246c       0x2e libscp/src/arch/freertos/csp_semaphore.o
+                0x0000246c                csp_bin_sem_create
  .text.csp_bin_sem_wait
-                0x0000242c       0x20 libscp/src/arch/freertos/csp_semaphore.o
-                0x0000242c                csp_bin_sem_wait
+                0x0000249a       0x20 libscp/src/arch/freertos/csp_semaphore.o
+                0x0000249a                csp_bin_sem_wait
  .text.csp_bin_sem_post
-                0x0000244c       0x24 libscp/src/arch/freertos/csp_semaphore.o
-                0x0000244c                csp_bin_sem_post
+                0x000024ba       0x24 libscp/src/arch/freertos/csp_semaphore.o
+                0x000024ba                csp_bin_sem_post
  .text.csp_sys_tasklist
-                0x00002470        0x8 libscp/src/arch/freertos/csp_system.o
-                0x00002470                csp_sys_tasklist
+                0x000024de        0x8 libscp/src/arch/freertos/csp_system.o
+                0x000024de                csp_sys_tasklist
  .text.csp_sys_tasklist_size
-                0x00002478        0xc libscp/src/arch/freertos/csp_system.o
-                0x00002478                csp_sys_tasklist_size
+                0x000024e6        0xc libscp/src/arch/freertos/csp_system.o
+                0x000024e6                csp_sys_tasklist_size
  .text.csp_sys_memfree
-                0x00002484       0xae libscp/src/arch/freertos/csp_system.o
-                0x00002484                csp_sys_memfree
+                0x000024f2       0xae libscp/src/arch/freertos/csp_system.o
+                0x000024f2                csp_sys_memfree
  .text.csp_sys_reboot
-                0x00002532       0x24 libscp/src/arch/freertos/csp_system.o
-                0x00002532                csp_sys_reboot
+                0x000025a0       0x24 libscp/src/arch/freertos/csp_system.o
+                0x000025a0                csp_sys_reboot
  .text.csp_thread_create
-                0x00002556       0x3c libscp/src/arch/freertos/csp_thread.o
-                0x00002556                csp_thread_create
+                0x000025c4       0x3e libscp/src/arch/freertos/csp_thread.o
+                0x000025c4                csp_thread_create
  .text.csp_get_ms
-                0x00002592        0xa libscp/src/arch/freertos/csp_time.o
-                0x00002592                csp_get_ms
+                0x00002602        0xa libscp/src/arch/freertos/csp_time.o
+                0x00002602                csp_get_ms
  .text.csp_get_s
-                0x0000259c       0x2c libscp/src/arch/freertos/csp_time.o
-                0x0000259c                csp_get_s
+                0x0000260c       0x2c libscp/src/arch/freertos/csp_time.o
+                0x0000260c                csp_get_s
  .text.csp_buffer_init
-                0x000025c8      0x114 libscp/src/csp_buffer.o
-                0x000025c8                csp_buffer_init
+                0x00002638      0x114 libscp/src/csp_buffer.o
+                0x00002638                csp_buffer_init
  .text.csp_buffer_get
-                0x000026dc       0x74 libscp/src/csp_buffer.o
-                0x000026dc                csp_buffer_get
+                0x0000274c       0x74 libscp/src/csp_buffer.o
+                0x0000274c                csp_buffer_get
  .text.csp_buffer_free_isr
-                0x00002750       0x70 libscp/src/csp_buffer.o
-                0x00002750                csp_buffer_free_isr
+                0x000027c0       0x70 libscp/src/csp_buffer.o
+                0x000027c0                csp_buffer_free_isr
  .text.csp_buffer_free
-                0x000027c0       0x6e libscp/src/csp_buffer.o
-                0x000027c0                csp_buffer_free
+                0x00002830       0x6e libscp/src/csp_buffer.o
+                0x00002830                csp_buffer_free
  .text.csp_buffer_remaining
-                0x0000282e        0xc libscp/src/csp_buffer.o
-                0x0000282e                csp_buffer_remaining
+                0x0000289e        0xc libscp/src/csp_buffer.o
+                0x0000289e                csp_buffer_remaining
  .text.csp_conn_enqueue_packet
-                0x0000283a       0x4c libscp/src/csp_conn.o
-                0x0000283a                csp_conn_enqueue_packet
+                0x000028aa       0x4c libscp/src/csp_conn.o
+                0x000028aa                csp_conn_enqueue_packet
  .text.csp_conn_init
-                0x00002886       0x94 libscp/src/csp_conn.o
-                0x00002886                csp_conn_init
+                0x000028f6       0x94 libscp/src/csp_conn.o
+                0x000028f6                csp_conn_init
  .text.csp_conn_find
-                0x0000291a       0x6c libscp/src/csp_conn.o
-                0x0000291a                csp_conn_find
+                0x0000298a       0x6c libscp/src/csp_conn.o
+                0x0000298a                csp_conn_find
  .text.csp_conn_flush_rx_queue
-                0x00002986       0x48 libscp/src/csp_conn.o
-                0x00002986                csp_conn_flush_rx_queue
+                0x000029f6       0x48 libscp/src/csp_conn.o
+                0x000029f6                csp_conn_flush_rx_queue
  .text.csp_conn_allocate
-                0x000029ce       0xcc libscp/src/csp_conn.o
-                0x000029ce                csp_conn_allocate
+                0x00002a3e       0xcc libscp/src/csp_conn.o
+                0x00002a3e                csp_conn_allocate
  .text.csp_conn_new
-                0x00002a9a       0x5c libscp/src/csp_conn.o
-                0x00002a9a                csp_conn_new
+                0x00002b0a       0x5c libscp/src/csp_conn.o
+                0x00002b0a                csp_conn_new
  .text.csp_close
-                0x00002af6       0x4a libscp/src/csp_conn.o
-                0x00002af6                csp_close
+                0x00002b66       0x4a libscp/src/csp_conn.o
+                0x00002b66                csp_close
  .text.csp_conn_dport
-                0x00002b40       0x1a libscp/src/csp_conn.o
-                0x00002b40                csp_conn_dport
+                0x00002bb0       0x1a libscp/src/csp_conn.o
+                0x00002bb0                csp_conn_dport
  .text.csp_crc32_memory
-                0x00002b5a       0xa4 libscp/src/csp_crc32.o
-                0x00002b5a                csp_crc32_memory
+                0x00002bca       0xa4 libscp/src/csp_crc32.o
+                0x00002bca                csp_crc32_memory
  .text.csp_crc32_append
-                0x00002bfe       0x42 libscp/src/csp_crc32.o
-                0x00002bfe                csp_crc32_append
+                0x00002c6e       0x42 libscp/src/csp_crc32.o
+                0x00002c6e                csp_crc32_append
  .text.csp_crc32_verify
-                0x00002c40       0x92 libscp/src/csp_crc32.o
-                0x00002c40                csp_crc32_verify
+                0x00002cb0       0x92 libscp/src/csp_crc32.o
+                0x00002cb0                csp_crc32_verify
  .text.csp_hton32
-                0x00002cd2       0x6a libscp/src/csp_endian.o
-                0x00002cd2                csp_hton32
+                0x00002d42       0x6a libscp/src/csp_endian.o
+                0x00002d42                csp_hton32
  .text.csp_ntoh32
-                0x00002d3c       0x6a libscp/src/csp_endian.o
-                0x00002d3c                csp_ntoh32
+                0x00002dac       0x6a libscp/src/csp_endian.o
+                0x00002dac                csp_ntoh32
  .text.csp_get_hostname
-                0x00002da6        0xa libscp/src/csp_io.o
-                0x00002da6                csp_get_hostname
+                0x00002e16        0xa libscp/src/csp_io.o
+                0x00002e16                csp_get_hostname
  .text.csp_get_model
-                0x00002db0        0xa libscp/src/csp_io.o
-                0x00002db0                csp_get_model
+                0x00002e20        0xa libscp/src/csp_io.o
+                0x00002e20                csp_get_model
  .text.csp_init
-                0x00002dba       0x20 libscp/src/csp_io.o
-                0x00002dba                csp_init
+                0x00002e2a       0x20 libscp/src/csp_io.o
+                0x00002e2a                csp_init
  .text.csp_socket
-                0x00002dda       0x8c libscp/src/csp_io.o
-                0x00002dda                csp_socket
+                0x00002e4a       0x8c libscp/src/csp_io.o
+                0x00002e4a                csp_socket
  .text.csp_accept
-                0x00002e66       0x4a libscp/src/csp_io.o
-                0x00002e66                csp_accept
+                0x00002ed6       0x4a libscp/src/csp_io.o
+                0x00002ed6                csp_accept
  .text.csp_read
-                0x00002eb0       0x50 libscp/src/csp_io.o
-                0x00002eb0                csp_read
+                0x00002f20       0x50 libscp/src/csp_io.o
+                0x00002f20                csp_read
  .text.csp_send_direct
-                0x00002f00      0x154 libscp/src/csp_io.o
-                0x00002f00                csp_send_direct
+                0x00002f70      0x154 libscp/src/csp_io.o
+                0x00002f70                csp_send_direct
  .text.csp_send
-                0x00003054       0x54 libscp/src/csp_io.o
-                0x00003054                csp_send
+                0x000030c4       0x54 libscp/src/csp_io.o
+                0x000030c4                csp_send
  .text.csp_sendto
-                0x000030a8       0xe2 libscp/src/csp_io.o
-                0x000030a8                csp_sendto
+                0x00003118       0xe2 libscp/src/csp_io.o
+                0x00003118                csp_sendto
  .text.csp_port_get_socket
-                0x0000318a       0x4e libscp/src/csp_port.o
-                0x0000318a                csp_port_get_socket
+                0x000031fa       0x4e libscp/src/csp_port.o
+                0x000031fa                csp_port_get_socket
  .text.csp_port_init
-                0x000031d8       0x14 libscp/src/csp_port.o
-                0x000031d8                csp_port_init
+                0x00003248       0x14 libscp/src/csp_port.o
+                0x00003248                csp_port_init
  .text.csp_listen
-                0x000031ec       0x36 libscp/src/csp_port.o
-                0x000031ec                csp_listen
+                0x0000325c       0x36 libscp/src/csp_port.o
+                0x0000325c                csp_listen
  .text.csp_bind
-                0x00003222       0x4e libscp/src/csp_port.o
-                0x00003222                csp_bind
+                0x00003292       0x4e libscp/src/csp_port.o
+                0x00003292                csp_bind
  .text.csp_route_security_check
-                0x00003270       0x8a libscp/src/csp_route.o
+                0x000032e0       0x8a libscp/src/csp_route.o
  .text.csp_route_next_packet
-                0x000032fa       0x24 libscp/src/csp_route.o
-                0x000032fa                csp_route_next_packet
+                0x0000336a       0x24 libscp/src/csp_route.o
+                0x0000336a                csp_route_next_packet
  .text.csp_route_start_task
-                0x0000331e       0x44 libscp/src/csp_route.o
-                0x0000331e                csp_route_start_task
+                0x0000338e       0x44 libscp/src/csp_route.o
+                0x0000338e                csp_route_start_task
  .text.csp_route_get_if_by_name
-                0x00003362       0x3e libscp/src/csp_route.o
-                0x00003362                csp_route_get_if_by_name
+                0x000033d2       0x3e libscp/src/csp_route.o
+                0x000033d2                csp_route_get_if_by_name
  .text.csp_route_add_if
-                0x000033a0       0x52 libscp/src/csp_route.o
-                0x000033a0                csp_route_add_if
+                0x00003410       0x52 libscp/src/csp_route.o
+                0x00003410                csp_route_add_if
  .text.csp_route_set
-                0x000033f2       0x4c libscp/src/csp_route.o
-                0x000033f2                csp_route_set
+                0x00003462       0x4c libscp/src/csp_route.o
+                0x00003462                csp_route_set
  .text.csp_route_table_init
-                0x0000343e       0x54 libscp/src/csp_route.o
-                0x0000343e                csp_route_table_init
+                0x000034ae       0x54 libscp/src/csp_route.o
+                0x000034ae                csp_route_table_init
  .text.csp_route_if
-                0x00003492       0x34 libscp/src/csp_route.o
-                0x00003492                csp_route_if
+                0x00003502       0x34 libscp/src/csp_route.o
+                0x00003502                csp_route_if
  .text.csp_task_router
-                0x000034c6      0x25e libscp/src/csp_route.o
-                0x000034c6                csp_task_router
+                0x00003536      0x25e libscp/src/csp_route.o
+                0x00003536                csp_task_router
  .text.csp_route_enqueue
-                0x00003724       0x2a libscp/src/csp_route.o
-                0x00003724                csp_route_enqueue
+                0x00003794       0x2a libscp/src/csp_route.o
+                0x00003794                csp_route_enqueue
  .text.csp_new_packet
-                0x0000374e       0xe4 libscp/src/csp_route.o
-                0x0000374e                csp_new_packet
+                0x000037be       0xe4 libscp/src/csp_route.o
+                0x000037be                csp_new_packet
  .text.csp_route_get_nexthop_mac
-                0x00003832        0x8 libscp/src/csp_route.o
-                0x00003832                csp_route_get_nexthop_mac
+                0x000038a2        0x8 libscp/src/csp_route.o
+                0x000038a2                csp_route_get_nexthop_mac
  .text.csp_cmp_handler
-                0x0000383a      0x2c8 libscp/src/csp_service_handler.o
-                0x0000383a                csp_cmp_handler
+                0x000038aa      0x2c8 libscp/src/csp_service_handler.o
+                0x000038aa                csp_cmp_handler
  .text.csp_service_handler
-                0x00003b02      0x17a libscp/src/csp_service_handler.o
-                0x00003b02                csp_service_handler
+                0x00003b72      0x17a libscp/src/csp_service_handler.o
+                0x00003b72                csp_service_handler
  .text.csp_i2c_tx
-                0x00003c7c       0x9a libscp/src/interfaces/csp_if_i2c.o
-                0x00003c7c                csp_i2c_tx
+                0x00003cec       0x9a libscp/src/interfaces/csp_if_i2c.o
+                0x00003cec                csp_i2c_tx
  .text.csp_i2c_rx
-                0x00003d16       0x78 libscp/src/interfaces/csp_if_i2c.o
-                0x00003d16                csp_i2c_rx
+                0x00003d86       0x78 libscp/src/interfaces/csp_if_i2c.o
+                0x00003d86                csp_i2c_rx
  .text.csp_i2c_init
-                0x00003d8e       0x58 libscp/src/interfaces/csp_if_i2c.o
-                0x00003d8e                csp_i2c_init
+                0x00003dfe       0x58 libscp/src/interfaces/csp_if_i2c.o
+                0x00003dfe                csp_i2c_init
  .text.csp_lo_tx
-                0x00003de6       0x12 libscp/src/interfaces/csp_if_lo.o
-                0x00003de6                csp_lo_tx
+                0x00003e56       0x12 libscp/src/interfaces/csp_if_lo.o
+                0x00003e56                csp_lo_tx
  .text.csp_udp_new_packet
-                0x00003df8       0x66 libscp/src/transport/csp_udp.o
-                0x00003df8                csp_udp_new_packet
- .text.blink    0x00003e5e       0x12 main.o
-                0x00003e5e                blink
- .text.main     0x00003e70       0xa4 main.o
-                0x00003e70                main
+                0x00003e68       0x66 libscp/src/transport/csp_udp.o
+                0x00003e68                csp_udp_new_packet
+ .text.blink    0x00003ece       0x12 main.o
+                0x00003ece                blink
+ .text.main     0x00003ee0       0xa4 main.o
+                0x00003ee0                main
  .text.sendFreeHeapSpace
-                0x00003f14       0xd0 mainTask.o
-                0x00003f14                sendFreeHeapSpace
+                0x00003f84       0xc4 mainTask.o
+                0x00003f84                sendFreeHeapSpace
  .text.houseKeeping
-                0x00003fe4      0x164 mainTask.o
-                0x00003fe4                houseKeeping
+                0x00004048      0x158 mainTask.o
+                0x00004048                houseKeeping
  .text.echoBack
-                0x00004148       0x78 mainTask.o
-                0x00004148                echoBack
+                0x000041a0       0x6c mainTask.o
+                0x000041a0                echoBack
  .text.mainTask
-                0x000041c0       0x5c mainTask.o
-                0x000041c0                mainTask
+                0x0000420c       0x5c mainTask.o
+                0x0000420c                mainTask
+ .text.CCPWrite
+                0x00004268       0x2a MyDrivers/clksys_driver.o
+                0x00004268                CCPWrite
+ .text.CLKSYS_XOSC_Config
+                0x00004292       0x16 MyDrivers/clksys_driver.o
+                0x00004292                CLKSYS_XOSC_Config
+ .text.CLKSYS_Disable
+                0x000042a8       0x14 MyDrivers/clksys_driver.o
+                0x000042a8                CLKSYS_Disable
+ .text.CLKSYS_Main_ClockSource_Select
+                0x000042bc       0x24 MyDrivers/clksys_driver.o
+                0x000042bc                CLKSYS_Main_ClockSource_Select
  .text.TC0_ConfigClockSource
-                0x0000421c        0xc MyDrivers/TC_driver.o
-                0x0000421c                TC0_ConfigClockSource
- .text.TC1_ConfigClockSource
-                0x00004228        0xc MyDrivers/TC_driver.o
-                0x00004228                TC1_ConfigClockSource
+                0x000042e0        0xc MyDrivers/TC_driver.o
+                0x000042e0                TC0_ConfigClockSource
  .text.TC0_SetOverflowIntLevel
-                0x00004234        0xc MyDrivers/TC_driver.o
-                0x00004234                TC0_SetOverflowIntLevel
- .text.TC1_SetOverflowIntLevel
-                0x00004240        0xc MyDrivers/TC_driver.o
-                0x00004240                TC1_SetOverflowIntLevel
+                0x000042ec        0xc MyDrivers/TC_driver.o
+                0x000042ec                TC0_SetOverflowIntLevel
  .text.TWI_MasterInit
-                0x0000424c       0x22 MyDrivers/twi_master_driver.o
-                0x0000424c                TWI_MasterInit
+                0x000042f8       0x22 MyDrivers/twi_master_driver.o
+                0x000042f8                TWI_MasterInit
  .text.TWI_MasterWriteRead
-                0x0000426e       0xc0 MyDrivers/twi_master_driver.o
-                0x0000426e                TWI_MasterWriteRead
+                0x0000431a       0xc0 MyDrivers/twi_master_driver.o
+                0x0000431a                TWI_MasterWriteRead
  .text.TWI_MasterWrite
-                0x0000432e        0xa MyDrivers/twi_master_driver.o
-                0x0000432e                TWI_MasterWrite
+                0x000043da        0xa MyDrivers/twi_master_driver.o
+                0x000043da                TWI_MasterWrite
  .text.TWI_MasterArbitrationLostBusErrorHandler
-                0x00004338       0x30 MyDrivers/twi_master_driver.o
-                0x00004338                TWI_MasterArbitrationLostBusErrorHandler
+                0x000043e4       0x30 MyDrivers/twi_master_driver.o
+                0x000043e4                TWI_MasterArbitrationLostBusErrorHandler
  .text.TWI_MasterWriteHandler
-                0x00004368       0x80 MyDrivers/twi_master_driver.o
-                0x00004368                TWI_MasterWriteHandler
+                0x00004414       0x80 MyDrivers/twi_master_driver.o
+                0x00004414                TWI_MasterWriteHandler
  .text.TWI_MasterReadHandler
-                0x000043e8       0x7e MyDrivers/twi_master_driver.o
-                0x000043e8                TWI_MasterReadHandler
+                0x00004494       0x7e MyDrivers/twi_master_driver.o
+                0x00004494                TWI_MasterReadHandler
  .text.TWI_MasterInterruptHandler
-                0x00004466       0x32 MyDrivers/twi_master_driver.o
-                0x00004466                TWI_MasterInterruptHandler
+                0x00004512       0x32 MyDrivers/twi_master_driver.o
+                0x00004512                TWI_MasterInterruptHandler
  .text.TWI_SlaveInitializeDriver
-                0x00004498       0x22 MyDrivers/twi_slave_driver.o
-                0x00004498                TWI_SlaveInitializeDriver
+                0x00004544       0x22 MyDrivers/twi_slave_driver.o
+                0x00004544                TWI_SlaveInitializeDriver
  .text.TWI_SlaveInitializeModule
-                0x000044ba       0x16 MyDrivers/twi_slave_driver.o
-                0x000044ba                TWI_SlaveInitializeModule
+                0x00004566       0x16 MyDrivers/twi_slave_driver.o
+                0x00004566                TWI_SlaveInitializeModule
  .text.TWI_SlaveTransactionFinished
-                0x000044d0       0x1a MyDrivers/twi_slave_driver.o
-                0x000044d0                TWI_SlaveTransactionFinished
+                0x0000457c       0x1a MyDrivers/twi_slave_driver.o
+                0x0000457c                TWI_SlaveTransactionFinished
  .text.TWI_SlaveAddressMatchHandler
-                0x000044ea       0x5a MyDrivers/twi_slave_driver.o
-                0x000044ea                TWI_SlaveAddressMatchHandler
+                0x00004596       0x5a MyDrivers/twi_slave_driver.o
+                0x00004596                TWI_SlaveAddressMatchHandler
  .text.TWI_SlaveStopHandler
-                0x00004544       0x1e MyDrivers/twi_slave_driver.o
-                0x00004544                TWI_SlaveStopHandler
+                0x000045f0       0x1e MyDrivers/twi_slave_driver.o
+                0x000045f0                TWI_SlaveStopHandler
  .text.TWI_SlaveReadHandler
-                0x00004562       0x74 MyDrivers/twi_slave_driver.o
-                0x00004562                TWI_SlaveReadHandler
+                0x0000460e       0x74 MyDrivers/twi_slave_driver.o
+                0x0000460e                TWI_SlaveReadHandler
  .text.TWI_SlaveWriteHandler
-                0x000045d6       0x6e MyDrivers/twi_slave_driver.o
-                0x000045d6                TWI_SlaveWriteHandler
+                0x00004682       0x6e MyDrivers/twi_slave_driver.o
+                0x00004682                TWI_SlaveWriteHandler
  .text.TWI_SlaveDataHandler
-                0x00004644       0x14 MyDrivers/twi_slave_driver.o
-                0x00004644                TWI_SlaveDataHandler
+                0x000046f0       0x14 MyDrivers/twi_slave_driver.o
+                0x000046f0                TWI_SlaveDataHandler
  .text.TWI_SlaveInterruptHandler
-                0x00004658       0x66 MyDrivers/twi_slave_driver.o
-                0x00004658                TWI_SlaveInterruptHandler
+                0x00004704       0x66 MyDrivers/twi_slave_driver.o
+                0x00004704                TWI_SlaveInterruptHandler
  .text.__vector_25
-                0x000046be       0xb0 MyDrivers/usart_driver_RTOS.o
-                0x000046be                __vector_25
+                0x0000476a       0xb0 MyDrivers/usart_driver_RTOS.o
+                0x0000476a                __vector_25
  .text.__vector_88
-                0x0000476e       0xb0 MyDrivers/usart_driver_RTOS.o
-                0x0000476e                __vector_88
+                0x0000481a       0xb0 MyDrivers/usart_driver_RTOS.o
+                0x0000481a                __vector_88
  .text.__vector_58
-                0x0000481e       0xb0 MyDrivers/usart_driver_RTOS.o
-                0x0000481e                __vector_58
+                0x000048ca       0xb0 MyDrivers/usart_driver_RTOS.o
+                0x000048ca                __vector_58
  .text.__vector_26
-                0x000048ce       0xc6 MyDrivers/usart_driver_RTOS.o
-                0x000048ce                __vector_26
+                0x0000497a       0xc6 MyDrivers/usart_driver_RTOS.o
+                0x0000497a                __vector_26
  .text.__vector_89
-                0x00004994       0xc6 MyDrivers/usart_driver_RTOS.o
-                0x00004994                __vector_89
+                0x00004a40       0xc6 MyDrivers/usart_driver_RTOS.o
+                0x00004a40                __vector_89
  .text.__vector_59
-                0x00004a5a       0xc6 MyDrivers/usart_driver_RTOS.o
-                0x00004a5a                __vector_59
- .text.boardInit
-                0x00004b20       0x8a system.o
-                0x00004b20                boardInit
+                0x00004b06       0xc6 MyDrivers/usart_driver_RTOS.o
+                0x00004b06                __vector_59
+ .text.timerRTC
+                0x00004bcc       0x6e system.o
+                0x00004bcc                timerRTC
  .text.__vector_20
-                0x00004baa       0xfe system.o
-                0x00004baa                __vector_20
+                0x00004c3a       0x3c system.o
+                0x00004c3a                __vector_20
+ .text.enable_xtal
+                0x00004c76       0x2c system.o
+                0x00004c76                enable_xtal
+ .text.boardInit
+                0x00004ca2       0xac system.o
+                0x00004ca2                boardInit
  .text.sysclk_init
-                0x00004ca8       0x4e src/ASF/common/services/clock/xmega/sysclk.o
-                0x00004ca8                sysclk_init
+                0x00004d4e       0x4e src/ASF/common/services/clock/xmega/sysclk.o
+                0x00004d4e                sysclk_init
  .text.sysclk_enable_module
-                0x00004cf6       0x18 src/ASF/common/services/clock/xmega/sysclk.o
-                0x00004cf6                sysclk_enable_module
+                0x00004d9c       0x18 src/ASF/common/services/clock/xmega/sysclk.o
+                0x00004d9c                sysclk_enable_module
  .text.ccp_write_io
-                0x00004d0e        0xc src/ASF/xmega/drivers/cpu/ccp.o
-                0x00004d0e                ccp_write_io
+                0x00004db4        0xc src/ASF/xmega/drivers/cpu/ccp.o
+                0x00004db4                ccp_write_io
  .text.avr-libc
-                0x00004d1a      0x702 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libprintf_flt.a(vfprintf_flt.o)
-                0x00004d1a                vfprintf
+                0x00004dc0      0x702 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libprintf_flt.a(vfprintf_flt.o)
+                0x00004dc0                vfprintf
  .text.libgcc.div
-                0x0000541c       0x26 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_divmodhi4.o)
-                0x0000541c                _div
-                0x0000541c                __divmodhi4
- .text.libgcc   0x00005442        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_tablejump.o)
-                0x00005442                __tablejump2__
-                0x00005446                __tablejump__
+                0x000054c2       0x26 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_divmodhi4.o)
+                0x000054c2                _div
+                0x000054c2                __divmodhi4
+ .text.libgcc   0x000054e8        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_tablejump.o)
+                0x000054e8                __tablejump2__
+                0x000054ec                __tablejump__
  .text.libgcc.mul
-                0x0000544e       0x1e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_umulhisi3.o)
-                0x0000544e                __umulhisi3
+                0x000054f4       0x1e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_umulhisi3.o)
+                0x000054f4                __umulhisi3
  .text.libgcc.div
-                0x0000546c       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_udivmodhi4.o)
-                0x0000546c                __udivmodhi4
+                0x00005512       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_udivmodhi4.o)
+                0x00005512                __udivmodhi4
  .text.avr-libc
-                0x00005494       0xae c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(rand.o)
-                0x00005524                rand_r
-                0x00005526                rand
-                0x0000552c                srand
+                0x0000553a       0xae c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(rand.o)
+                0x000055ca                rand_r
+                0x000055cc                rand
+                0x000055d2                srand
  .text.avr-libc
-                0x00005542      0x1b0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(ftoa_engine.o)
-                0x00005542                __ftoa_engine
+                0x000055e8      0x1b0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(ftoa_engine.o)
+                0x000055e8                __ftoa_engine
  .text.avr-libc
-                0x000056f2       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strnlen_P.o)
-                0x000056f2                strnlen_P
+                0x00005798       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strnlen_P.o)
+                0x00005798                strnlen_P
  .text.avr-libc
-                0x00005708       0x1a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(memcmp.o)
-                0x00005708                memcmp
+                0x000057ae       0x1a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(memcmp.o)
+                0x000057ae                memcmp
  .text.avr-libc
-                0x00005722       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(memcpy.o)
-                0x00005722                memcpy
+                0x000057c8       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(memcpy.o)
+                0x000057c8                memcpy
  .text.avr-libc
-                0x00005734        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(memset.o)
-                0x00005734                memset
+                0x000057da        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(memset.o)
+                0x000057da                memset
  .text.avr-libc
-                0x00005742       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strcat.o)
-                0x00005742                strcat
+                0x000057e8       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strcat.o)
+                0x000057e8                strcat
  .text.avr-libc
-                0x00005758        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strcpy.o)
-                0x00005758                strcpy
+                0x000057fe        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strcpy.o)
+                0x000057fe                strcpy
  .text.avr-libc
-                0x00005766       0x1c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strncmp.o)
-                0x00005766                strncmp
+                0x0000580c       0x1c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strncmp.o)
+                0x0000580c                strncmp
  .text.avr-libc
-                0x00005782       0x1e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strncpy.o)
-                0x00005782                strncpy
+                0x00005828       0x1e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strncpy.o)
+                0x00005828                strncpy
  .text.avr-libc
-                0x000057a0       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strnlen.o)
-                0x000057a0                strnlen
+                0x00005846       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strnlen.o)
+                0x00005846                strnlen
  .text.avr-libc
-                0x000057b6       0x14 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(itoa_ncheck.o)
-                0x000057b6                __itoa_ncheck
+                0x0000585c       0x14 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(itoa_ncheck.o)
+                0x0000585c                __itoa_ncheck
  .text.avr-libc
-                0x000057ca       0x32 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(utoa_ncheck.o)
-                0x000057ca                __utoa_ncheck
-                0x000057cc                __utoa_common
+                0x00005870       0x32 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(utoa_ncheck.o)
+                0x00005870                __utoa_ncheck
+                0x00005872                __utoa_common
  .text.avr-libc
-                0x000057fc       0x64 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(fputc.o)
-                0x000057fc                fputc
+                0x000058a2       0x64 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(fputc.o)
+                0x000058a2                fputc
  .text.avr-libc
-                0x00005860       0x50 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(sprintf.o)
-                0x00005860                sprintf
+                0x00005906       0x50 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(sprintf.o)
+                0x00005906                sprintf
  .text.avr-libc
-                0x000058b0       0xbc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(ultoa_invert.o)
-                0x000058b0                __ultoa_invert
+                0x00005956       0xbc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(ultoa_invert.o)
+                0x00005956                __ultoa_invert
  .text.avr-libc
-                0x0000596c       0x20 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strrev.o)
-                0x0000596c                strrev
+                0x00005a12       0x20 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7\libc.a(strrev.o)
+                0x00005a12                strrev
  .text.libgcc.div
-                0x0000598c       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_divmodsi4.o)
-                0x0000598c                __divmodsi4
+                0x00005a32       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_divmodsi4.o)
+                0x00005a32                __divmodsi4
  .text.libgcc.div
-                0x000059b4       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_negsi2.o)
-                0x000059b4                __negsi2
+                0x00005a5a       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_negsi2.o)
+                0x00005a5a                __negsi2
  .text.libgcc.mul
-                0x000059c4       0x14 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_muluhisi3.o)
-                0x000059c4                __muluhisi3
+                0x00005a6a       0x14 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_muluhisi3.o)
+                0x00005a6a                __muluhisi3
  .text.libgcc.mul
-                0x000059d8        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_mulshisi3.o)
-                0x000059d8                __mulshisi3
-                0x000059dc                __mulohisi3
+                0x00005a7e        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_mulshisi3.o)
+                0x00005a7e                __mulshisi3
+                0x00005a82                __mulohisi3
  .text.libgcc.div
-                0x000059e4       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_udivmodsi4.o)
-                0x000059e4                __udivmodsi4
-                0x00005a28                . = ALIGN (0x2)
+                0x00005a8a       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_udivmodsi4.o)
+                0x00005a8a                __udivmodsi4
+                0x00005ace                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00005a28        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_exit.o)
-                0x00005a28                _exit
-                0x00005a28                exit
+ .fini9         0x00005ace        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_exit.o)
+                0x00005ace                _exit
+                0x00005ace                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1723,11 +1789,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00005a28        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_exit.o)
+ .fini0         0x00005ace        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega7\libgcc.a(_exit.o)
  *(.fini0)
-                0x00005a2c                _etext = .
+                0x00005ad2                _etext = .
 
-.data           0x00802000      0x104 load address 0x00005a2c
+.data           0x00802000      0x116 load address 0x00005ad2
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00802000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega7/crtx128a4u.o
@@ -1766,11 +1832,13 @@ END GROUP
  .data          0x00802000        0x0 libscp/src/transport/csp_udp.o
  .data          0x00802000        0x0 main.o
  .data          0x00802000        0x0 mainTask.o
+ .data          0x00802000        0x0 MyDrivers/clksys_driver.o
  .data          0x00802000        0x0 MyDrivers/port_driver.o
  .data          0x00802000        0x0 MyDrivers/TC_driver.o
  .data          0x00802000        0x0 MyDrivers/twi_master_driver.o
  .data          0x00802000        0x0 MyDrivers/twi_slave_driver.o
  .data          0x00802000        0x0 MyDrivers/usart_driver_RTOS.o
+ .data          0x00802000        0x0 spi_memory_25lcxx.o
  .data          0x00802000        0x0 system.o
  .data          0x00802000        0x0 src/ASF/common/services/clock/xmega/sysclk.o
  .data          0x00802000        0x0 src/ASF/common/services/ioport/xmega/ioport_compat.o
@@ -1842,134 +1910,137 @@ END GROUP
  .rodata.str1.1
                 0x008020b8       0x17 main.o
  .rodata.str1.1
-                0x008020cf       0x34 mainTask.o
+                0x008020cf       0x3d mainTask.o
+ .rodata.str1.1
+                0x0080210c        0x9 system.o
  *(.gnu.linkonce.d*)
-                0x00802104                . = ALIGN (0x2)
- *fill*         0x00802103        0x1 
-                0x00802104                _edata = .
-                0x00802104                PROVIDE (__data_end, .)
+                0x00802116                . = ALIGN (0x2)
+ *fill*         0x00802115        0x1 
+                0x00802116                _edata = .
+                0x00802116                PROVIDE (__data_end, .)
 
-.bss            0x00802104     0x1e78
-                0x00802104                PROVIDE (__bss_start, .)
+.bss            0x00802116     0x1e7a
+                0x00802116                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.xNextFreeByte
-                0x00802104        0x2 FreeRTOS/Port/heap_1.o
- .bss.xHeap     0x00802106     0x1b58 FreeRTOS/Port/heap_1.o
+                0x00802116        0x2 FreeRTOS/Port/heap_1.o
+ .bss.xHeap     0x00802118     0x1b58 FreeRTOS/Port/heap_1.o
  .bss.pcStatusString
-                0x00803c5e       0x32 FreeRTOS/Source/tasks.o
- .bss.xTracing  0x00803c90        0x1 FreeRTOS/Source/tasks.o
+                0x00803c70       0x32 FreeRTOS/Source/tasks.o
+ .bss.xTracing  0x00803ca2        0x1 FreeRTOS/Source/tasks.o
  .bss.pcTraceBufferEnd
-                0x00803c91        0x2 FreeRTOS/Source/tasks.o
+                0x00803ca3        0x2 FreeRTOS/Source/tasks.o
  .bss.pcTraceBuffer
-                0x00803c93        0x2 FreeRTOS/Source/tasks.o
+                0x00803ca5        0x2 FreeRTOS/Source/tasks.o
  .bss.uxTaskNumber
-                0x00803c95        0x1 FreeRTOS/Source/tasks.o
+                0x00803ca7        0x1 FreeRTOS/Source/tasks.o
  .bss.xNumOfOverflows
-                0x00803c96        0x1 FreeRTOS/Source/tasks.o
+                0x00803ca8        0x1 FreeRTOS/Source/tasks.o
  .bss.xMissedYield
-                0x00803c97        0x1 FreeRTOS/Source/tasks.o
+                0x00803ca9        0x1 FreeRTOS/Source/tasks.o
  .bss.uxMissedTicks
-                0x00803c98        0x1 FreeRTOS/Source/tasks.o
+                0x00803caa        0x1 FreeRTOS/Source/tasks.o
  .bss.uxSchedulerSuspended
-                0x00803c99        0x1 FreeRTOS/Source/tasks.o
+                0x00803cab        0x1 FreeRTOS/Source/tasks.o
  .bss.xSchedulerRunning
-                0x00803c9a        0x1 FreeRTOS/Source/tasks.o
+                0x00803cac        0x1 FreeRTOS/Source/tasks.o
  .bss.uxTopReadyPriority
-                0x00803c9b        0x1 FreeRTOS/Source/tasks.o
+                0x00803cad        0x1 FreeRTOS/Source/tasks.o
  .bss.uxTopUsedPriority
-                0x00803c9c        0x1 FreeRTOS/Source/tasks.o
+                0x00803cae        0x1 FreeRTOS/Source/tasks.o
  .bss.xTickCount
-                0x00803c9d        0x2 FreeRTOS/Source/tasks.o
+                0x00803caf        0x2 FreeRTOS/Source/tasks.o
  .bss.uxCurrentNumberOfTasks
-                0x00803c9f        0x1 FreeRTOS/Source/tasks.o
+                0x00803cb1        0x1 FreeRTOS/Source/tasks.o
  .bss.xSuspendedTaskList
-                0x00803ca0        0x9 FreeRTOS/Source/tasks.o
+                0x00803cb2        0x9 FreeRTOS/Source/tasks.o
  .bss.xPendingReadyList
-                0x00803ca9        0x9 FreeRTOS/Source/tasks.o
+                0x00803cbb        0x9 FreeRTOS/Source/tasks.o
  .bss.pxOverflowDelayedTaskList
-                0x00803cb2        0x2 FreeRTOS/Source/tasks.o
+                0x00803cc4        0x2 FreeRTOS/Source/tasks.o
  .bss.pxDelayedTaskList
-                0x00803cb4        0x2 FreeRTOS/Source/tasks.o
+                0x00803cc6        0x2 FreeRTOS/Source/tasks.o
  .bss.xDelayedTaskList2
-                0x00803cb6        0x9 FreeRTOS/Source/tasks.o
- .bss.xDelayedTaskList1
-                0x00803cbf        0x9 FreeRTOS/Source/tasks.o
- .bss.pxReadyTasksLists
                 0x00803cc8        0x9 FreeRTOS/Source/tasks.o
+ .bss.xDelayedTaskList1
+                0x00803cd1        0x9 FreeRTOS/Source/tasks.o
+ .bss.pxReadyTasksLists
+                0x00803cda        0x9 FreeRTOS/Source/tasks.o
  .bss.pxCurrentTCB
-                0x00803cd1        0x2 FreeRTOS/Source/tasks.o
-                0x00803cd1                pxCurrentTCB
+                0x00803ce3        0x2 FreeRTOS/Source/tasks.o
+                0x00803ce3                pxCurrentTCB
  .bss.xLastTime.4385
-                0x00803cd3        0x2 FreeRTOS/Source/timers.o
+                0x00803ce5        0x2 FreeRTOS/Source/timers.o
  .bss.xTimerQueue
-                0x00803cd5        0x2 FreeRTOS/Source/timers.o
+                0x00803ce7        0x2 FreeRTOS/Source/timers.o
  .bss.pxOverflowTimerList
-                0x00803cd7        0x2 FreeRTOS/Source/timers.o
+                0x00803ce9        0x2 FreeRTOS/Source/timers.o
  .bss.pxCurrentTimerList
-                0x00803cd9        0x2 FreeRTOS/Source/timers.o
+                0x00803ceb        0x2 FreeRTOS/Source/timers.o
  .bss.xActiveTimerList2
-                0x00803cdb        0x9 FreeRTOS/Source/timers.o
+                0x00803ced        0x9 FreeRTOS/Source/timers.o
  .bss.xActiveTimerList1
-                0x00803ce4        0x9 FreeRTOS/Source/timers.o
- .bss.size      0x00803ced        0x2 libscp/src/csp_buffer.o
- .bss.count     0x00803cef        0x2 libscp/src/csp_buffer.o
+                0x00803cf6        0x9 FreeRTOS/Source/timers.o
+ .bss.size      0x00803cff        0x2 libscp/src/csp_buffer.o
+ .bss.count     0x00803d01        0x2 libscp/src/csp_buffer.o
  .bss.csp_buffer_pool
-                0x00803cf1        0x2 libscp/src/csp_buffer.o
+                0x00803d03        0x2 libscp/src/csp_buffer.o
  .bss.csp_buffers
-                0x00803cf3        0x2 libscp/src/csp_buffer.o
+                0x00803d05        0x2 libscp/src/csp_buffer.o
  .bss.csp_conn_last_given.5048
-                0x00803cf5        0x1 libscp/src/csp_conn.o
+                0x00803d07        0x1 libscp/src/csp_conn.o
  .bss.sport_lock
-                0x00803cf6        0x2 libscp/src/csp_conn.o
- .bss.sport     0x00803cf8        0x1 libscp/src/csp_conn.o
+                0x00803d08        0x2 libscp/src/csp_conn.o
+ .bss.sport     0x00803d0a        0x1 libscp/src/csp_conn.o
  .bss.conn_lock
-                0x00803cf9        0x2 libscp/src/csp_conn.o
- .bss.arr_conn  0x00803cfb       0xf0 libscp/src/csp_conn.o
+                0x00803d0b        0x2 libscp/src/csp_conn.o
+ .bss.arr_conn  0x00803d0d       0xf0 libscp/src/csp_conn.o
  .bss.csp_model
-                0x00803deb        0x2 libscp/src/csp_io.o
+                0x00803dfd        0x2 libscp/src/csp_io.o
  .bss.csp_hostname
-                0x00803ded        0x2 libscp/src/csp_io.o
- .bss.ports     0x00803def       0x63 libscp/src/csp_port.o
+                0x00803dff        0x2 libscp/src/csp_io.o
+ .bss.ports     0x00803e01       0x63 libscp/src/csp_port.o
  .bss.router_input_fifo
-                0x00803e52        0x2 libscp/src/csp_route.o
+                0x00803e64        0x2 libscp/src/csp_route.o
  .bss.handle_router
-                0x00803e54        0x2 libscp/src/csp_route.o
- .bss.routes    0x00803e56       0x63 libscp/src/csp_route.o
+                0x00803e66        0x2 libscp/src/csp_route.o
+ .bss.routes    0x00803e68       0x63 libscp/src/csp_route.o
  .bss.interfaces
-                0x00803eb9        0x2 libscp/src/csp_route.o
+                0x00803ecb        0x2 libscp/src/csp_route.o
  .bss.packet.4545
-                0x00803ebb        0x2 libscp/src/interfaces/csp_if_i2c.o
+                0x00803ecd        0x2 libscp/src/interfaces/csp_if_i2c.o
  *(COMMON)
- COMMON         0x00803ebd        0x2 cspTask.o
-                0x00803ebd                xCSPEventQueue
- COMMON         0x00803ebf       0xa6 csp_interface.o
-                0x00803ebf                twi_csp_slave
-                0x00803f11                twi_csp_master
-                0x00803f63                callbackFunction
- COMMON         0x00803f65        0x1 libscp/src/csp_io.o
-                0x00803f65                my_address
- COMMON         0x00803f66        0x2 mainTask.o
-                0x00803f66                outcomingPacket
- COMMON         0x00803f68        0x8 MyDrivers/usart_driver_RTOS.o
-                0x00803f68                usartBufferF
-                0x00803f6a                usartBufferE
-                0x00803f6c                usartBufferD
-                0x00803f6e                usartBufferC
- COMMON         0x00803f70        0xc system.o
-                0x00803f70                hoursTimer
-                0x00803f74                milisecondsTimer
-                0x00803f78                secondsTimer
-                0x00803f7c                PROVIDE (__bss_end, .)
-                0x00005a2c                __data_load_start = LOADADDR (.data)
-                0x00005b30                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00803ecf        0x2 cspTask.o
+                0x00803ecf                xCSPEventQueue
+ COMMON         0x00803ed1       0xa6 csp_interface.o
+                0x00803ed1                twi_csp_slave
+                0x00803f23                twi_csp_master
+                0x00803f75                callbackFunction
+ COMMON         0x00803f77        0x1 libscp/src/csp_io.o
+                0x00803f77                my_address
+ COMMON         0x00803f78        0x2 mainTask.o
+                0x00803f78                outcomingPacket
+ COMMON         0x00803f7a        0x8 MyDrivers/usart_driver_RTOS.o
+                0x00803f7a                usartBufferF
+                0x00803f7c                usartBufferE
+                0x00803f7e                usartBufferD
+                0x00803f80                usartBufferC
+ COMMON         0x00803f82        0xe system.o
+                0x00803f82                hoursTimer
+                0x00803f86                milisecondsTimer
+                0x00803f8a                xTimers
+                0x00803f8c                secondsTimer
+                0x00803f90                PROVIDE (__bss_end, .)
+                0x00005ad2                __data_load_start = LOADADDR (.data)
+                0x00005be8                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00803f7c        0x0
-                0x00803f7c                PROVIDE (__noinit_start, .)
+.noinit         0x00803f90        0x0
+                0x00803f90                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00803f7c                PROVIDE (__noinit_end, .)
-                0x00803f7c                _end = .
-                0x00803f7c                PROVIDE (__heap_start, .)
+                0x00803f90                PROVIDE (__noinit_end, .)
+                0x00803f90                _end = .
+                0x00803f90                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -2046,11 +2117,13 @@ END GROUP
  .comment       0x00000000       0x31 libscp/src/transport/csp_udp.o
  .comment       0x00000000       0x31 main.o
  .comment       0x00000000       0x31 mainTask.o
+ .comment       0x00000000       0x31 MyDrivers/clksys_driver.o
  .comment       0x00000000       0x31 MyDrivers/port_driver.o
  .comment       0x00000000       0x31 MyDrivers/TC_driver.o
  .comment       0x00000000       0x31 MyDrivers/twi_master_driver.o
  .comment       0x00000000       0x31 MyDrivers/twi_slave_driver.o
  .comment       0x00000000       0x31 MyDrivers/usart_driver_RTOS.o
+ .comment       0x00000000       0x31 spi_memory_25lcxx.o
  .comment       0x00000000       0x31 system.o
  .comment       0x00000000       0x31 src/ASF/common/services/clock/xmega/sysclk.o
  .comment       0x00000000       0x31 src/ASF/common/services/ioport/xmega/ioport_compat.o
@@ -2080,7 +2153,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0xe18
+.debug_aranges  0x00000000      0xf18
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 cspTask.o
@@ -2153,32 +2226,36 @@ END GROUP
  .debug_aranges
                 0x000009f8       0x38 mainTask.o
  .debug_aranges
-                0x00000a30       0x30 MyDrivers/port_driver.o
+                0x00000a30       0x68 MyDrivers/clksys_driver.o
  .debug_aranges
-                0x00000a60       0xc8 MyDrivers/TC_driver.o
+                0x00000a98       0x30 MyDrivers/port_driver.o
  .debug_aranges
-                0x00000b28       0x70 MyDrivers/twi_master_driver.o
+                0x00000ac8       0xc8 MyDrivers/TC_driver.o
  .debug_aranges
-                0x00000b98       0x60 MyDrivers/twi_slave_driver.o
+                0x00000b90       0x70 MyDrivers/twi_master_driver.o
  .debug_aranges
-                0x00000bf8       0x90 MyDrivers/usart_driver_RTOS.o
+                0x00000c00       0x60 MyDrivers/twi_slave_driver.o
  .debug_aranges
-                0x00000c88       0x28 system.o
+                0x00000c60       0x90 MyDrivers/usart_driver_RTOS.o
  .debug_aranges
-                0x00000cb0       0x40 src/ASF/common/services/clock/xmega/sysclk.o
+                0x00000cf0       0x88 spi_memory_25lcxx.o
  .debug_aranges
-                0x00000cf0       0x20 src/ASF/common/services/ioport/xmega/ioport_compat.o
+                0x00000d78       0x38 system.o
  .debug_aranges
-                0x00000d10       0xc0 src/ASF/xmega/drivers/nvm/nvm.o
+                0x00000db0       0x40 src/ASF/common/services/clock/xmega/sysclk.o
  .debug_aranges
-                0x00000dd0       0x28 src/ASF/xmega/drivers/nvm/nvm_asm.o
+                0x00000df0       0x20 src/ASF/common/services/ioport/xmega/ioport_compat.o
  .debug_aranges
-                0x00000df8       0x20 src/ASF/xmega/drivers/cpu/ccp.o
+                0x00000e10       0xc0 src/ASF/xmega/drivers/nvm/nvm.o
+ .debug_aranges
+                0x00000ed0       0x28 src/ASF/xmega/drivers/nvm/nvm_asm.o
+ .debug_aranges
+                0x00000ef8       0x20 src/ASF/xmega/drivers/cpu/ccp.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x1583b
+.debug_info     0x00000000    0x16d5d
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x61b cspTask.o
  .debug_info    0x0000061b      0x8a7 csp_interface.o
@@ -2213,21 +2290,23 @@ END GROUP
  .debug_info    0x0000daca      0x3d1 libscp/src/interfaces/csp_if_lo.o
  .debug_info    0x0000de9b       0x6b libscp/src/transport/csp_rdp.o
  .debug_info    0x0000df06      0x401 libscp/src/transport/csp_udp.o
- .debug_info    0x0000e307      0x9cc main.o
- .debug_info    0x0000ecd3      0xa49 mainTask.o
- .debug_info    0x0000f71c      0x48c MyDrivers/port_driver.o
- .debug_info    0x0000fba8     0x1315 MyDrivers/TC_driver.o
- .debug_info    0x00010ebd      0x887 MyDrivers/twi_master_driver.o
- .debug_info    0x00011744      0x69b MyDrivers/twi_slave_driver.o
- .debug_info    0x00011ddf      0xf8d MyDrivers/usart_driver_RTOS.o
- .debug_info    0x00012d6c      0xc9f system.o
- .debug_info    0x00013a0b      0x829 src/ASF/common/services/clock/xmega/sysclk.o
- .debug_info    0x00014234      0x119 src/ASF/common/services/ioport/xmega/ioport_compat.o
- .debug_info    0x0001434d     0x13c2 src/ASF/xmega/drivers/nvm/nvm.o
- .debug_info    0x0001570f       0x96 src/ASF/xmega/drivers/nvm/nvm_asm.o
- .debug_info    0x000157a5       0x96 src/ASF/xmega/drivers/cpu/ccp.o
+ .debug_info    0x0000e307      0x9cb main.o
+ .debug_info    0x0000ecd2      0x6fe mainTask.o
+ .debug_info    0x0000f3d0      0x646 MyDrivers/clksys_driver.o
+ .debug_info    0x0000fa16      0x48c MyDrivers/port_driver.o
+ .debug_info    0x0000fea2     0x1315 MyDrivers/TC_driver.o
+ .debug_info    0x000111b7      0x887 MyDrivers/twi_master_driver.o
+ .debug_info    0x00011a3e      0x69b MyDrivers/twi_slave_driver.o
+ .debug_info    0x000120d9      0xf8d MyDrivers/usart_driver_RTOS.o
+ .debug_info    0x00013066     0x140b spi_memory_25lcxx.o
+ .debug_info    0x00014471      0xabc system.o
+ .debug_info    0x00014f2d      0x829 src/ASF/common/services/clock/xmega/sysclk.o
+ .debug_info    0x00015756      0x119 src/ASF/common/services/ioport/xmega/ioport_compat.o
+ .debug_info    0x0001586f     0x13c2 src/ASF/xmega/drivers/nvm/nvm.o
+ .debug_info    0x00016c31       0x96 src/ASF/xmega/drivers/nvm/nvm_asm.o
+ .debug_info    0x00016cc7       0x96 src/ASF/xmega/drivers/cpu/ccp.o
 
-.debug_abbrev   0x00000000     0x5402
+.debug_abbrev   0x00000000     0x5825
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x20a cspTask.o
  .debug_abbrev  0x0000020a      0x247 csp_interface.o
@@ -2263,20 +2342,22 @@ END GROUP
  .debug_abbrev  0x00003874       0x26 libscp/src/transport/csp_rdp.o
  .debug_abbrev  0x0000389a      0x1a2 libscp/src/transport/csp_udp.o
  .debug_abbrev  0x00003a3c      0x2da main.o
- .debug_abbrev  0x00003d16      0x35e mainTask.o
- .debug_abbrev  0x00004074      0x118 MyDrivers/port_driver.o
- .debug_abbrev  0x0000418c      0x176 MyDrivers/TC_driver.o
- .debug_abbrev  0x00004302      0x2a2 MyDrivers/twi_master_driver.o
- .debug_abbrev  0x000045a4      0x204 MyDrivers/twi_slave_driver.o
- .debug_abbrev  0x000047a8      0x30a MyDrivers/usart_driver_RTOS.o
- .debug_abbrev  0x00004ab2      0x247 system.o
- .debug_abbrev  0x00004cf9      0x278 src/ASF/common/services/clock/xmega/sysclk.o
- .debug_abbrev  0x00004f71       0x90 src/ASF/common/services/ioport/xmega/ioport_compat.o
- .debug_abbrev  0x00005001      0x3db src/ASF/xmega/drivers/nvm/nvm.o
- .debug_abbrev  0x000053dc       0x12 src/ASF/xmega/drivers/nvm/nvm_asm.o
- .debug_abbrev  0x000053ee       0x14 src/ASF/xmega/drivers/cpu/ccp.o
+ .debug_abbrev  0x00003d16      0x2c3 mainTask.o
+ .debug_abbrev  0x00003fd9      0x1c8 MyDrivers/clksys_driver.o
+ .debug_abbrev  0x000041a1      0x118 MyDrivers/port_driver.o
+ .debug_abbrev  0x000042b9      0x176 MyDrivers/TC_driver.o
+ .debug_abbrev  0x0000442f      0x2a2 MyDrivers/twi_master_driver.o
+ .debug_abbrev  0x000046d1      0x204 MyDrivers/twi_slave_driver.o
+ .debug_abbrev  0x000048d5      0x30a MyDrivers/usart_driver_RTOS.o
+ .debug_abbrev  0x00004bdf      0x289 spi_memory_25lcxx.o
+ .debug_abbrev  0x00004e68      0x2b4 system.o
+ .debug_abbrev  0x0000511c      0x278 src/ASF/common/services/clock/xmega/sysclk.o
+ .debug_abbrev  0x00005394       0x90 src/ASF/common/services/ioport/xmega/ioport_compat.o
+ .debug_abbrev  0x00005424      0x3db src/ASF/xmega/drivers/nvm/nvm.o
+ .debug_abbrev  0x000057ff       0x12 src/ASF/xmega/drivers/nvm/nvm_asm.o
+ .debug_abbrev  0x00005811       0x14 src/ASF/xmega/drivers/cpu/ccp.o
 
-.debug_line     0x00000000     0x91c3
+.debug_line     0x00000000     0x9a0f
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x22c cspTask.o
  .debug_line    0x0000022c      0x2a7 csp_interface.o
@@ -2311,21 +2392,23 @@ END GROUP
  .debug_line    0x00006424      0x101 libscp/src/interfaces/csp_if_lo.o
  .debug_line    0x00006525       0x1a libscp/src/transport/csp_rdp.o
  .debug_line    0x0000653f      0x1bd libscp/src/transport/csp_udp.o
- .debug_line    0x000066fc      0x2b7 main.o
- .debug_line    0x000069b3      0x3a9 mainTask.o
- .debug_line    0x00006d5c      0x1ca MyDrivers/port_driver.o
- .debug_line    0x00006f26      0x355 MyDrivers/TC_driver.o
- .debug_line    0x0000727b      0x400 MyDrivers/twi_master_driver.o
- .debug_line    0x0000767b      0x3a3 MyDrivers/twi_slave_driver.o
- .debug_line    0x00007a1e      0x627 MyDrivers/usart_driver_RTOS.o
- .debug_line    0x00008045      0x26c system.o
- .debug_line    0x000082b1      0x353 src/ASF/common/services/clock/xmega/sysclk.o
- .debug_line    0x00008604      0x166 src/ASF/common/services/ioport/xmega/ioport_compat.o
- .debug_line    0x0000876a      0x8cc src/ASF/xmega/drivers/nvm/nvm.o
- .debug_line    0x00009036      0x11f src/ASF/xmega/drivers/nvm/nvm_asm.o
- .debug_line    0x00009155       0x6e src/ASF/xmega/drivers/cpu/ccp.o
+ .debug_line    0x000066fc      0x2b8 main.o
+ .debug_line    0x000069b4      0x2b1 mainTask.o
+ .debug_line    0x00006c65      0x27e MyDrivers/clksys_driver.o
+ .debug_line    0x00006ee3      0x1ca MyDrivers/port_driver.o
+ .debug_line    0x000070ad      0x355 MyDrivers/TC_driver.o
+ .debug_line    0x00007402      0x400 MyDrivers/twi_master_driver.o
+ .debug_line    0x00007802      0x3a3 MyDrivers/twi_slave_driver.o
+ .debug_line    0x00007ba5      0x627 MyDrivers/usart_driver_RTOS.o
+ .debug_line    0x000081cc      0x609 spi_memory_25lcxx.o
+ .debug_line    0x000087d5      0x328 system.o
+ .debug_line    0x00008afd      0x353 src/ASF/common/services/clock/xmega/sysclk.o
+ .debug_line    0x00008e50      0x166 src/ASF/common/services/ioport/xmega/ioport_compat.o
+ .debug_line    0x00008fb6      0x8cc src/ASF/xmega/drivers/nvm/nvm.o
+ .debug_line    0x00009882      0x11f src/ASF/xmega/drivers/nvm/nvm_asm.o
+ .debug_line    0x000099a1       0x6e src/ASF/xmega/drivers/cpu/ccp.o
 
-.debug_frame    0x00000000     0x2d40
+.debug_frame    0x00000000     0x30a0
  *(.debug_frame)
  .debug_frame   0x00000000       0x24 cspTask.o
  .debug_frame   0x00000024      0x138 csp_interface.o
@@ -2358,108 +2441,114 @@ END GROUP
  .debug_frame   0x00001f1c       0x40 libscp/src/transport/csp_udp.o
  .debug_frame   0x00001f5c       0x58 main.o
  .debug_frame   0x00001fb4      0x134 mainTask.o
- .debug_frame   0x000020e8       0x50 MyDrivers/port_driver.o
- .debug_frame   0x00002138      0x174 MyDrivers/TC_driver.o
- .debug_frame   0x000022ac       0xf0 MyDrivers/twi_master_driver.o
- .debug_frame   0x0000239c       0xc8 MyDrivers/twi_slave_driver.o
- .debug_frame   0x00002464      0x494 MyDrivers/usart_driver_RTOS.o
- .debug_frame   0x000028f8       0x6c system.o
- .debug_frame   0x00002964       0x64 src/ASF/common/services/clock/xmega/sysclk.o
- .debug_frame   0x000029c8       0x30 src/ASF/common/services/ioport/xmega/ioport_compat.o
- .debug_frame   0x000029f8      0x348 src/ASF/xmega/drivers/nvm/nvm.o
+ .debug_frame   0x000020e8       0xdc MyDrivers/clksys_driver.o
+ .debug_frame   0x000021c4       0x50 MyDrivers/port_driver.o
+ .debug_frame   0x00002214      0x174 MyDrivers/TC_driver.o
+ .debug_frame   0x00002388       0xf0 MyDrivers/twi_master_driver.o
+ .debug_frame   0x00002478       0xc8 MyDrivers/twi_slave_driver.o
+ .debug_frame   0x00002540      0x494 MyDrivers/usart_driver_RTOS.o
+ .debug_frame   0x000029d4      0x274 spi_memory_25lcxx.o
+ .debug_frame   0x00002c48       0x7c system.o
+ .debug_frame   0x00002cc4       0x64 src/ASF/common/services/clock/xmega/sysclk.o
+ .debug_frame   0x00002d28       0x30 src/ASF/common/services/ioport/xmega/ioport_compat.o
+ .debug_frame   0x00002d58      0x348 src/ASF/xmega/drivers/nvm/nvm.o
 
-.debug_str      0x00000000     0x5567
+.debug_str      0x00000000     0x5bee
  *(.debug_str)
- .debug_str     0x00000000      0x364 cspTask.o
-                                0x3c7 (size before relaxing)
- .debug_str     0x00000364      0x4d6 csp_interface.o
-                                0x6c0 (size before relaxing)
- .debug_str     0x0000083a       0xbe FreeRTOS/Port/heap_1.o
-                                0x23a (size before relaxing)
- .debug_str     0x000008f8      0x634 FreeRTOS/Port/port.o
-                                0x7f1 (size before relaxing)
- .debug_str     0x00000f2c      0x39e FreeRTOS/Source/croutine.o
-                                0x542 (size before relaxing)
- .debug_str     0x000012ca       0x62 FreeRTOS/Source/list.o
-                                0x2ad (size before relaxing)
- .debug_str     0x0000132c      0x3e9 FreeRTOS/Source/queue.o
-                                0x69e (size before relaxing)
- .debug_str     0x00001715      0x5d1 FreeRTOS/Source/tasks.o
-                                0xad9 (size before relaxing)
- .debug_str     0x00001ce6      0x336 FreeRTOS/Source/timers.o
-                                0x770 (size before relaxing)
- .debug_str     0x0000201c       0x3d libscp/src/arch/freertos/csp_malloc.o
-                                0x1c2 (size before relaxing)
- .debug_str     0x00002059       0xe4 libscp/src/arch/freertos/csp_queue.o
-                                0x336 (size before relaxing)
- .debug_str     0x0000213d      0x103 libscp/src/arch/freertos/csp_semaphore.o
-                                0x31e (size before relaxing)
- .debug_str     0x00002240      0x179 libscp/src/arch/freertos/csp_system.o
-                                0x34a (size before relaxing)
- .debug_str     0x000023b9       0x83 libscp/src/arch/freertos/csp_thread.o
-                                0x287 (size before relaxing)
- .debug_str     0x0000243c       0x59 libscp/src/arch/freertos/csp_time.o
-                                0x20f (size before relaxing)
- .debug_str     0x00002495       0x20 libscp/src/crypto/csp_hmac.o
-                                0x182 (size before relaxing)
- .debug_str     0x000024b5       0x20 libscp/src/crypto/csp_sha1.o
-                                0x182 (size before relaxing)
- .debug_str     0x000024d5       0x20 libscp/src/crypto/csp_xtea.o
-                                0x182 (size before relaxing)
- .debug_str     0x000024f5      0x14a libscp/src/csp_buffer.o
-                                0x3e6 (size before relaxing)
- .debug_str     0x0000263f      0x1d0 libscp/src/csp_conn.o
-                                0x538 (size before relaxing)
- .debug_str     0x0000280f       0x79 libscp/src/csp_crc32.o
-                                0x24d (size before relaxing)
- .debug_str     0x00002888      0x170 libscp/src/csp_debug.o
-                                0x3dd (size before relaxing)
- .debug_str     0x000029f8       0xeb libscp/src/csp_endian.o
-                                0x288 (size before relaxing)
- .debug_str     0x00002ae3      0x208 libscp/src/csp_io.o
-                                0x5fe (size before relaxing)
- .debug_str     0x00002ceb       0x77 libscp/src/csp_port.o
-                                0x3a5 (size before relaxing)
- .debug_str     0x00002d62      0x1f4 libscp/src/csp_route.o
-                                0x6f2 (size before relaxing)
- .debug_str     0x00002f56      0x106 libscp/src/csp_services.o
-                                0x4d1 (size before relaxing)
- .debug_str     0x0000305c       0xab libscp/src/csp_service_handler.o
-                                0x5b5 (size before relaxing)
- .debug_str     0x00003107       0x9f libscp/src/csp_sfp.o
-                                0x3c7 (size before relaxing)
- .debug_str     0x000031a6       0x54 libscp/src/interfaces/csp_if_i2c.o
-                                0x395 (size before relaxing)
- .debug_str     0x000031fa       0x2f libscp/src/interfaces/csp_if_lo.o
-                                0x2c4 (size before relaxing)
- .debug_str     0x00003229       0x22 libscp/src/transport/csp_rdp.o
-                                0x197 (size before relaxing)
- .debug_str     0x0000324b       0x22 libscp/src/transport/csp_udp.o
-                                0x327 (size before relaxing)
- .debug_str     0x0000326d      0x175 main.o
-                                0x542 (size before relaxing)
- .debug_str     0x000033e2       0x96 mainTask.o
-                                0x574 (size before relaxing)
- .debug_str     0x00003478      0x312 MyDrivers/port_driver.o
-                                0x552 (size before relaxing)
- .debug_str     0x0000378a      0x697 MyDrivers/TC_driver.o
-                                0xcc4 (size before relaxing)
- .debug_str     0x00003e21      0x2f9 MyDrivers/twi_master_driver.o
-                                0x657 (size before relaxing)
- .debug_str     0x0000411a      0x12f MyDrivers/twi_slave_driver.o
-                                0x574 (size before relaxing)
- .debug_str     0x00004249      0x428 MyDrivers/usart_driver_RTOS.o
-                                0x8ec (size before relaxing)
- .debug_str     0x00004671      0x180 system.o
-                                0x983 (size before relaxing)
- .debug_str     0x000047f1      0x3f5 src/ASF/common/services/clock/xmega/sysclk.o
+ .debug_str     0x00000000      0x340 cspTask.o
+                                0x3a3 (size before relaxing)
+ .debug_str     0x00000340      0x4d6 csp_interface.o
+                                0x69c (size before relaxing)
+ .debug_str     0x00000816       0xbe FreeRTOS/Port/heap_1.o
+                                0x216 (size before relaxing)
+ .debug_str     0x000008d4      0x634 FreeRTOS/Port/port.o
+                                0x7cd (size before relaxing)
+ .debug_str     0x00000f08      0x39e FreeRTOS/Source/croutine.o
+                                0x51e (size before relaxing)
+ .debug_str     0x000012a6       0x62 FreeRTOS/Source/list.o
+                                0x289 (size before relaxing)
+ .debug_str     0x00001308      0x3e9 FreeRTOS/Source/queue.o
+                                0x67a (size before relaxing)
+ .debug_str     0x000016f1      0x5d1 FreeRTOS/Source/tasks.o
+                                0xab5 (size before relaxing)
+ .debug_str     0x00001cc2      0x336 FreeRTOS/Source/timers.o
+                                0x74c (size before relaxing)
+ .debug_str     0x00001ff8       0x3d libscp/src/arch/freertos/csp_malloc.o
+                                0x19e (size before relaxing)
+ .debug_str     0x00002035       0xe4 libscp/src/arch/freertos/csp_queue.o
+                                0x312 (size before relaxing)
+ .debug_str     0x00002119      0x103 libscp/src/arch/freertos/csp_semaphore.o
+                                0x2fa (size before relaxing)
+ .debug_str     0x0000221c      0x179 libscp/src/arch/freertos/csp_system.o
+                                0x326 (size before relaxing)
+ .debug_str     0x00002395       0x83 libscp/src/arch/freertos/csp_thread.o
+                                0x263 (size before relaxing)
+ .debug_str     0x00002418       0x59 libscp/src/arch/freertos/csp_time.o
+                                0x1eb (size before relaxing)
+ .debug_str     0x00002471       0x20 libscp/src/crypto/csp_hmac.o
+                                0x15e (size before relaxing)
+ .debug_str     0x00002491       0x20 libscp/src/crypto/csp_sha1.o
+                                0x15e (size before relaxing)
+ .debug_str     0x000024b1       0x20 libscp/src/crypto/csp_xtea.o
+                                0x15e (size before relaxing)
+ .debug_str     0x000024d1      0x14a libscp/src/csp_buffer.o
+                                0x3c2 (size before relaxing)
+ .debug_str     0x0000261b      0x1d0 libscp/src/csp_conn.o
+                                0x514 (size before relaxing)
+ .debug_str     0x000027eb       0x79 libscp/src/csp_crc32.o
+                                0x229 (size before relaxing)
+ .debug_str     0x00002864      0x170 libscp/src/csp_debug.o
+                                0x3b9 (size before relaxing)
+ .debug_str     0x000029d4       0xeb libscp/src/csp_endian.o
+                                0x264 (size before relaxing)
+ .debug_str     0x00002abf      0x208 libscp/src/csp_io.o
+                                0x5da (size before relaxing)
+ .debug_str     0x00002cc7       0x77 libscp/src/csp_port.o
+                                0x381 (size before relaxing)
+ .debug_str     0x00002d3e      0x1f4 libscp/src/csp_route.o
+                                0x6ce (size before relaxing)
+ .debug_str     0x00002f32      0x106 libscp/src/csp_services.o
+                                0x4ad (size before relaxing)
+ .debug_str     0x00003038       0xab libscp/src/csp_service_handler.o
+                                0x591 (size before relaxing)
+ .debug_str     0x000030e3       0x9f libscp/src/csp_sfp.o
+                                0x3a3 (size before relaxing)
+ .debug_str     0x00003182       0x54 libscp/src/interfaces/csp_if_i2c.o
+                                0x371 (size before relaxing)
+ .debug_str     0x000031d6       0x2f libscp/src/interfaces/csp_if_lo.o
+                                0x2a0 (size before relaxing)
+ .debug_str     0x00003205       0x22 libscp/src/transport/csp_rdp.o
+                                0x173 (size before relaxing)
+ .debug_str     0x00003227       0x22 libscp/src/transport/csp_udp.o
+                                0x303 (size before relaxing)
+ .debug_str     0x00003249      0x175 main.o
+                                0x51e (size before relaxing)
+ .debug_str     0x000033be       0x96 mainTask.o
+                                0x39f (size before relaxing)
+ .debug_str     0x00003454      0x61c MyDrivers/clksys_driver.o
+                                0x7a3 (size before relaxing)
+ .debug_str     0x00003a70      0x2ff MyDrivers/port_driver.o
+                                0x52e (size before relaxing)
+ .debug_str     0x00003d6f      0x697 MyDrivers/TC_driver.o
+                                0xca0 (size before relaxing)
+ .debug_str     0x00004406      0x2f9 MyDrivers/twi_master_driver.o
+                                0x633 (size before relaxing)
+ .debug_str     0x000046ff      0x12f MyDrivers/twi_slave_driver.o
+                                0x550 (size before relaxing)
+ .debug_str     0x0000482e      0x428 MyDrivers/usart_driver_RTOS.o
+                                0x8c8 (size before relaxing)
+ .debug_str     0x00004c56      0x28d spi_memory_25lcxx.o
+                                0x5ba (size before relaxing)
+ .debug_str     0x00004ee3      0x139 system.o
+                                0x867 (size before relaxing)
+ .debug_str     0x0000501c      0x251 src/ASF/common/services/clock/xmega/sysclk.o
                                 0x629 (size before relaxing)
- .debug_str     0x00004be6       0x77 src/ASF/common/services/ioport/xmega/ioport_compat.o
+ .debug_str     0x0000526d       0x77 src/ASF/common/services/ioport/xmega/ioport_compat.o
                                 0x231 (size before relaxing)
- .debug_str     0x00004c5d      0x90a src/ASF/xmega/drivers/nvm/nvm.o
+ .debug_str     0x000052e4      0x90a src/ASF/xmega/drivers/nvm/nvm.o
                                 0xb3b (size before relaxing)
 
-.debug_loc      0x00000000     0xd2b8
+.debug_loc      0x00000000     0xdeb2
  *(.debug_loc)
  .debug_loc     0x00000000       0x6e cspTask.o
  .debug_loc     0x0000006e      0x385 csp_interface.o
@@ -2490,16 +2579,18 @@ END GROUP
  .debug_loc     0x000098c8       0x88 libscp/src/interfaces/csp_if_lo.o
  .debug_loc     0x00009950       0xe3 libscp/src/transport/csp_udp.o
  .debug_loc     0x00009a33       0x96 main.o
- .debug_loc     0x00009ac9      0x3f2 mainTask.o
- .debug_loc     0x00009ebb      0x15d MyDrivers/port_driver.o
- .debug_loc     0x0000a018      0x378 MyDrivers/TC_driver.o
- .debug_loc     0x0000a390      0x631 MyDrivers/twi_master_driver.o
- .debug_loc     0x0000a9c1      0x3df MyDrivers/twi_slave_driver.o
- .debug_loc     0x0000ada0     0x1098 MyDrivers/usart_driver_RTOS.o
- .debug_loc     0x0000be38       0xa4 system.o
- .debug_loc     0x0000bedc      0x235 src/ASF/common/services/clock/xmega/sysclk.o
- .debug_loc     0x0000c111       0x66 src/ASF/common/services/ioport/xmega/ioport_compat.o
- .debug_loc     0x0000c177     0x1141 src/ASF/xmega/drivers/nvm/nvm.o
+ .debug_loc     0x00009ac9      0x3b6 mainTask.o
+ .debug_loc     0x00009e7f      0x2cf MyDrivers/clksys_driver.o
+ .debug_loc     0x0000a14e      0x15d MyDrivers/port_driver.o
+ .debug_loc     0x0000a2ab      0x378 MyDrivers/TC_driver.o
+ .debug_loc     0x0000a623      0x631 MyDrivers/twi_master_driver.o
+ .debug_loc     0x0000ac54      0x3df MyDrivers/twi_slave_driver.o
+ .debug_loc     0x0000b033     0x1098 MyDrivers/usart_driver_RTOS.o
+ .debug_loc     0x0000c0cb      0x960 spi_memory_25lcxx.o
+ .debug_loc     0x0000ca2b       0xab system.o
+ .debug_loc     0x0000cad6      0x235 src/ASF/common/services/clock/xmega/sysclk.o
+ .debug_loc     0x0000cd0b       0x66 src/ASF/common/services/ioport/xmega/ioport_compat.o
+ .debug_loc     0x0000cd71     0x1141 src/ASF/xmega/drivers/nvm/nvm.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -2519,7 +2610,7 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0xbe8
+.debug_ranges   0x00000000      0xcc8
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x10 cspTask.o
  .debug_ranges  0x00000010       0x40 csp_interface.o
@@ -2552,16 +2643,18 @@ END GROUP
  .debug_ranges  0x00000868       0x10 libscp/src/transport/csp_udp.o
  .debug_ranges  0x00000878       0x18 main.o
  .debug_ranges  0x00000890       0x28 mainTask.o
- .debug_ranges  0x000008b8       0x20 MyDrivers/port_driver.o
- .debug_ranges  0x000008d8       0xb8 MyDrivers/TC_driver.o
- .debug_ranges  0x00000990       0x60 MyDrivers/twi_master_driver.o
- .debug_ranges  0x000009f0       0x50 MyDrivers/twi_slave_driver.o
- .debug_ranges  0x00000a40       0x80 MyDrivers/usart_driver_RTOS.o
- .debug_ranges  0x00000ac0       0x18 system.o
- .debug_ranges  0x00000ad8       0x30 src/ASF/common/services/clock/xmega/sysclk.o
- .debug_ranges  0x00000b08       0x10 src/ASF/common/services/ioport/xmega/ioport_compat.o
- .debug_ranges  0x00000b18       0xb0 src/ASF/xmega/drivers/nvm/nvm.o
- .debug_ranges  0x00000bc8       0x20 src/ASF/xmega/drivers/nvm/nvm_asm.o
+ .debug_ranges  0x000008b8       0x58 MyDrivers/clksys_driver.o
+ .debug_ranges  0x00000910       0x20 MyDrivers/port_driver.o
+ .debug_ranges  0x00000930       0xb8 MyDrivers/TC_driver.o
+ .debug_ranges  0x000009e8       0x60 MyDrivers/twi_master_driver.o
+ .debug_ranges  0x00000a48       0x50 MyDrivers/twi_slave_driver.o
+ .debug_ranges  0x00000a98       0x80 MyDrivers/usart_driver_RTOS.o
+ .debug_ranges  0x00000b18       0x78 spi_memory_25lcxx.o
+ .debug_ranges  0x00000b90       0x28 system.o
+ .debug_ranges  0x00000bb8       0x30 src/ASF/common/services/clock/xmega/sysclk.o
+ .debug_ranges  0x00000be8       0x10 src/ASF/common/services/ioport/xmega/ioport_compat.o
+ .debug_ranges  0x00000bf8       0xb0 src/ASF/xmega/drivers/nvm/nvm.o
+ .debug_ranges  0x00000ca8       0x20 src/ASF/xmega/drivers/nvm/nvm_asm.o
 
 .debug_macro
  *(.debug_macro)

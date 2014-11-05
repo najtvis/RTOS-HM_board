@@ -112,11 +112,13 @@ C_SRCS +=  \
 ../libscp/src/transport/csp_udp.c \
 ../main.c \
 ../mainTask.c \
+../MyDrivers/clksys_driver.c \
 ../MyDrivers/port_driver.c \
 ../MyDrivers/TC_driver.c \
 ../MyDrivers/twi_master_driver.c \
 ../MyDrivers/twi_slave_driver.c \
 ../MyDrivers/usart_driver_RTOS.c \
+../spi_memory_25lcxx.c \
 ../system.c \
 ../src/ASF/common/services/clock/xmega/sysclk.c \
 ../src/ASF/common/services/ioport/xmega/ioport_compat.c \
@@ -167,11 +169,13 @@ libscp/src/transport/csp_rdp.o \
 libscp/src/transport/csp_udp.o \
 main.o \
 mainTask.o \
+MyDrivers/clksys_driver.o \
 MyDrivers/port_driver.o \
 MyDrivers/TC_driver.o \
 MyDrivers/twi_master_driver.o \
 MyDrivers/twi_slave_driver.o \
 MyDrivers/usart_driver_RTOS.o \
+spi_memory_25lcxx.o \
 system.o \
 src/ASF/common/services/clock/xmega/sysclk.o \
 src/ASF/common/services/ioport/xmega/ioport_compat.o \
@@ -215,11 +219,13 @@ libscp/src/transport/csp_rdp.o \
 libscp/src/transport/csp_udp.o \
 main.o \
 mainTask.o \
+MyDrivers/clksys_driver.o \
 MyDrivers/port_driver.o \
 MyDrivers/TC_driver.o \
 MyDrivers/twi_master_driver.o \
 MyDrivers/twi_slave_driver.o \
 MyDrivers/usart_driver_RTOS.o \
+spi_memory_25lcxx.o \
 system.o \
 src/ASF/common/services/clock/xmega/sysclk.o \
 src/ASF/common/services/ioport/xmega/ioport_compat.o \
@@ -263,11 +269,13 @@ libscp/src/transport/csp_rdp.d \
 libscp/src/transport/csp_udp.d \
 main.d \
 mainTask.d \
+MyDrivers/clksys_driver.d \
 MyDrivers/port_driver.d \
 MyDrivers/TC_driver.d \
 MyDrivers/twi_master_driver.d \
 MyDrivers/twi_slave_driver.d \
 MyDrivers/usart_driver_RTOS.d \
+spi_memory_25lcxx.d \
 system.d \
 src/ASF/common/services/clock/xmega/sysclk.d \
 src/ASF/common/services/ioport/xmega/ioport_compat.d \
@@ -311,11 +319,13 @@ libscp/src/transport/csp_rdp.d \
 libscp/src/transport/csp_udp.d \
 main.d \
 mainTask.d \
+MyDrivers/clksys_driver.d \
 MyDrivers/port_driver.d \
 MyDrivers/TC_driver.d \
 MyDrivers/twi_master_driver.d \
 MyDrivers/twi_slave_driver.d \
 MyDrivers/usart_driver_RTOS.d \
+spi_memory_25lcxx.d \
 system.d \
 src/ASF/common/services/clock/xmega/sysclk.d \
 src/ASF/common/services/ioport/xmega/ioport_compat.d \
@@ -334,6 +344,10 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

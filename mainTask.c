@@ -24,11 +24,11 @@ int sendFreeHeapSpace(csp_packet_t * inPacket) {
 	outcomingPacket->length = strlen(msg);
 
 	/* Send packet */
-	if (csp_sendto(CSP_PRIO_NORM, inPacket->id.src, inPacket->id.sport, inPacket->id.dport, CSP_O_NONE, outcomingPacket, 1000) == CSP_ERR_NONE) {
-		
+	if (csp_sendto(CSP_PRIO_NORM, inPacket->id.src, inPacket->id.sport, inPacket->id.dport, CSP_O_NONE, outcomingPacket, 1000) == CSP_ERR_NONE) {		
 		/* Send succeeded */
-		led_red_toggle();
-	} else {
+
+	} 
+	else {
 		/* Send failed */
 	}
 
@@ -42,7 +42,7 @@ int houseKeeping(csp_packet_t * inPacket) {
 	
 	// put the info message into the packet
 	char msg[64];
-	sprintf(msg, "*** Board\n\rSoftware v1.0\n\rUptime: %id %ih %im %ds\n\r", (int16_t) hoursTimer/24, (int16_t) hoursTimer%24, (int16_t) secondsTimer/60, (int16_t) secondsTimer%60);
+	sprintf(msg, "*** Board\n\rSoftware HM board v1.0\n\rUptime: %id %ih %im %ds\n\r", (int16_t) hoursTimer/24, (int16_t) hoursTimer%24, (int16_t) secondsTimer/60, (int16_t) secondsTimer%60);
 
 	strcpy(outcomingPacket->data, msg);
 	outcomingPacket->length = strlen(msg);
@@ -51,8 +51,8 @@ int houseKeeping(csp_packet_t * inPacket) {
 	if (csp_sendto(CSP_PRIO_NORM, inPacket->id.src, inPacket->id.sport, inPacket->id.dport, CSP_O_NONE, outcomingPacket, 1000) == CSP_ERR_NONE) {
 		
 		/* Send succeeded */
-		led_red_toggle();
-	} else {
+	} 
+	else {
 		/* Send failed */
 	}
 
@@ -69,8 +69,8 @@ int echoBack(csp_packet_t * inPacket) {
 	if (csp_sendto(CSP_PRIO_NORM, inPacket->id.src, inPacket->id.sport, inPacket->id.dport, CSP_O_NONE, inPacket, 1000) == CSP_ERR_NONE) {
 		
 		/* Send succeeded */
-		led_red_toggle();
-	} else {
+	} 
+	else {
 		/* Send failed */
 	}
 
