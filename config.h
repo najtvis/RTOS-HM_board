@@ -43,7 +43,7 @@
 /*	CSP define															*/
 /* -------------------------------------------------------------------- */
 // Address of the local CSP node
-#define CSP_MY_ADDRESS	4		// Deska HM
+#define CSP_MY_ADDRESS	6		// Deska HM
 
 // Address of the OBC CSP node
 #define CSP_OBC_ADDRESS	1	

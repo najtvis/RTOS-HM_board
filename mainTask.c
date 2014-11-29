@@ -8,6 +8,7 @@
 #include "mainTask.h"
 #include "cspTask.h"
 #include "system.h"
+//#include "spi_memory_25lcxx.h"
 
 csp_packet_t * outcomingPacket;
 
@@ -41,8 +42,25 @@ int sendFreeHeapSpace(csp_packet_t * inPacket) {
 int houseKeeping(csp_packet_t * inPacket) {
 	
 	// put the info message into the packet
+// 	char msg[64];
+// 	sprintf(msg, "*** Board\n\rSoftware HM board v1.0\n\rUptime: %id %ih %im %ds\n\r", (int16_t) hoursTimer/24, (int16_t) hoursTimer%24, (int16_t) secondsTimer/60, (int16_t) secondsTimer%60);
+
+// 	complex cislo;
+// 	complex cislo_read;
 	char msg[64];
-	sprintf(msg, "*** Board\n\rSoftware HM board v1.0\n\rUptime: %id %ih %im %ds\n\r", (int16_t) hoursTimer/24, (int16_t) hoursTimer%24, (int16_t) secondsTimer/60, (int16_t) secondsTimer%60);
+
+	memset(msg,0,64);
+
+
+// 	cislo.imag = 70;
+// 	cislo.real = 160;
+
+
+	//spi_mem_write_complex(0x15,cislo);
+	//cislo_read = spi_mem_read_complex(0x15);
+
+		
+	sprintf(msg, "\n\r*** HM Board ***\n\rUptime: %id %ih %im %ds\n\r", (int16_t) hoursTimer/24, (int16_t) hoursTimer%24, (int16_t) secondsTimer/60, (int16_t) secondsTimer%60);
 
 	strcpy(outcomingPacket->data, msg);
 	outcomingPacket->length = strlen(msg);
@@ -76,6 +94,7 @@ int echoBack(csp_packet_t * inPacket) {
 
 	return 0;
 }
+
 
 /* -------------------------------------------------------------------- */
 /*	The main task														*/

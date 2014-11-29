@@ -47,7 +47,8 @@
 
 #ifndef F_CPU
 /*! \brief Define default CPU frequency, if this is not already defined. */
-#define F_CPU 16470000UL
+//#define F_CPU 16470000UL
+#define F_CPU 32000000UL
 #endif
 
 #include <stdint.h>

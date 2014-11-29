@@ -32,7 +32,7 @@ void boardInit() {
 	sysclk_init();
 	
 	// enable external oscillator
-	enable_xtal();
+	//enable_xtal();
 	
 	// enable SPI communication on port C for SPI memory
 	//spi_mem_init();	
@@ -76,8 +76,10 @@ void boardInit() {
 	ioport_set_pin_dir(POWER_SWITCH, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_high(POWER_SWITCH);
 	
-	//ioport_set_pin_dir(MEM_CS,IOPORT_DIR_OUTPUT);
-	//ioport_set_pin_dir(MEM_WP,IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(MEM_CS,IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(MEM_MOSI,IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(MEM_MISO,IOPORT_DIR_INPUT);
+	ioport_set_pin_dir(MEM_SCK,IOPORT_DIR_OUTPUT);
 	
 	//power_switch_off();
 	

@@ -37,19 +37,19 @@ void spi_mem_init(void);
 // definition of opcodes for SPI memory
 #define SPI_READ 0x03		// read data from memory
 #define SPI_WRITE 0x02		// write data to memory
-#define SPI_WREN 0x06		// set the write enable latch - enable write operations
-#define SPI_WRDI 0x04		// reset the write enable latch - disable write operations
+// #define SPI_WREN 0x06		// set the write enable latch - enable write operations
+// #define SPI_WRDI 0x04		// reset the write enable latch - disable write operations
 #define SPI_RDSR 0x05		// read status register
 #define SPI_WRSR 0x01		// write status register
 
 // Macro used to drive the SPIC /SS signal low in order to select the slave
-#define SET_MEM_CS_LOW ioport_set_pin_low(MEM_CS);
+#define SET_MEM_CS_LOW() ioport_set_pin_level(MEM_CS, 0)
 // Macro used to drive the SPIC /SS signal high in order to deselect the slave
-#define SET_MEM_CS_HIGH ioport_set_pin_high(MEM_CS);
+#define SET_MEM_CS_HIGH() ioport_set_pin_level(MEM_CS, 1)
 
 // Macro used to drive the SPI memory /WP signal low in order to write protect
-#define SET_WP_LOW ioport_set_pin_low(MEM_WP);
+//#define SET_WP_LOW ioport_set_pin_low(MEM_WP);
 // Macro used to drive the SPI memory /WP signal high in order to write unprotect
-#define SET_WP_HIGH ioport_set_pin_low(MEM_WP);
+//#define SET_WP_HIGH ioport_set_pin_low(MEM_WP);
 
 #endif
