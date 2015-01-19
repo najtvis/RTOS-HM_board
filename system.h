@@ -20,13 +20,10 @@
 // POWER_SWITCH on PORTE.3
 #define	POWER_SWITCH			IOPORT_CREATE_PIN(PORTE, 3)
 #define	MEM_CS					IOPORT_CREATE_PIN(PORTC, 4)
-#define	MEM_MOSI				IOPORT_CREATE_PIN(PORTC, 5)
-#define	MEM_MISO				IOPORT_CREATE_PIN(PORTC, 6)
-#define	MEM_SCK					IOPORT_CREATE_PIN(PORTC, 7)
-//#define	MEM_WP					IOPORT_CREATE_PIN(PORTC, 3)
+#define	MEM_WP					IOPORT_CREATE_PIN(PORTC, 3)
 
-#define power_switch_on()		ioport_set_pin_level(POWER_SWITCH, 0)
-#define power_switch_off()		ioport_set_pin_level(POWER_SWITCH, 1)
+#define power_switch_on()		ioport_set_pin_level(POWER_SWITCH, false)
+#define power_switch_off()		ioport_set_pin_level(POWER_SWITCH, true)
 #define power_switch_toggle()	ioport_toggle_pin_level(POWER_SWITCH)
 	
 /* -------------------------------------------------------------------- */

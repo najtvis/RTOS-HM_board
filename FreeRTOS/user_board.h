@@ -10,8 +10,7 @@
 #define USER_BOARD_H_
 
 #ifndef F_CPU
-//#define F_CPU 16470000UL
-#define F_CPU 32000000UL
+#define F_CPU 16470000UL
 #endif
 
 #endif /* USER_BOARD_H_ */

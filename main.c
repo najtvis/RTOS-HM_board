@@ -23,6 +23,66 @@ void blink(void *p) {
 	}
 }
 
+// void testing (void *p)
+// {
+// complex cislo;
+// complex cislo_read[5];
+// char msg[64];
+// 
+// 
+// 
+// 	cislo.imag = 50;
+// 	cislo.real = 180;	
+// 
+// 	spi_mem_write_complex(0x15,cislo);
+// 	cislo_read[0] = spi_mem_read_complex(0x15);
+// 	
+// 	cislo.imag = 55;
+// 	cislo.real = 190;
+// 
+// 	spi_mem_write_complex(0x754,cislo);
+// 	cislo_read[1] = spi_mem_read_complex(0x754);
+// 	
+// 	cislo.imag = 60;
+// 	cislo.real = 150;
+// 
+// 	spi_mem_write_complex(0x214,cislo);
+// 	cislo_read[2] = spi_mem_read_complex(0x214);
+// 	
+// 	cislo.imag = 65;
+// 	cislo.real = 610;
+// 
+// 	spi_mem_write_complex(0xd87,cislo);
+// 	cislo_read[3] = spi_mem_read_complex(0xD87);
+// 	
+// 	cislo.imag = 70;
+// 	cislo.real = 180;
+// 
+// 	spi_mem_write_complex(0x367,cislo);
+// 	cislo_read[4] = spi_mem_read_complex(0x367);
+// 	
+// 	sprintf(msg, "\n\r*** Board test SPI memory***\n\rvalue: %i+j%i, %i+j%i, %i+j%i %i+j%i, %i+j%i\n\r",cislo_read[0].real,cislo_read[0].imag, 
+// 																										cislo_read[1].real,cislo_read[1].imag,
+// 																										cislo_read[2].real,cislo_read[2].imag,
+// 																										cislo_read[3].real,cislo_read[3].imag,
+// 																										cislo_read[4].real,cislo_read[4].imag);
+// 
+// // 	strcpy(outcomingPacket->data, msg);
+// // 	outcomingPacket->length = strlen(msg);
+// 
+// 	/* Send packet */
+// // 	if (csp_sendto(CSP_PRIO_NORM, CSP_OBC_ADDRESS, 15, 15, CSP_O_NONE, outcomingPacket, 1000) == CSP_ERR_NONE) {
+// // 			
+// // 		/* Send succeeded */
+// // 	}
+// // 	else {
+// // 		/* Send failed */
+// // 	}
+// 		
+// 		
+// 	vTaskDelay(1000);
+// }
+
 int main(void) {
 	
 	// initialize the xMega peripherals
@@ -46,9 +106,9 @@ int main(void) {
 	/* -------------------------------------------------------------------- */
 	/*	Starts blinking task - only for debug								*/
 	/* -------------------------------------------------------------------- */
-	//xTaskCreate(blink, (signed char*) "blink", 64, NULL, configNORMAL_PRIORITY, NULL);
+	xTaskCreate(blink, (signed char*) "blink", 64, NULL, configNORMAL_PRIORITY, NULL);
 	
-	//xTaskCreate(testing_spi, (signed char*) "testing", 256, NULL, configNORMAL_PRIORITY, NULL);	
+	//xTaskCreate(testing, (signed char*) "testing", 256, NULL, configNORMAL_PRIORITY, NULL);	
 	/* -------------------------------------------------------------------- */
 	/*	Starts task that handles incoming communication		 				*/
 	/* -------------------------------------------------------------------- */
