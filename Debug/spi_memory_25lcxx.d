@@ -49,7 +49,10 @@ spi_memory_25lcxx.d spi_memory_25lcxx.o: .././spi_memory_25lcxx.c \
  ../FreeRTOS/Source/include/task.h ../FreeRTOS/Source/include/list.h \
  ../libscp/include/csp/arch/csp_clock.h \
  ../libscp/include/csp/interfaces/csp_if_i2c.h \
- ../libscp/include/csp/csp_interface.h
+ ../libscp/include/csp/csp_interface.h ../src/ASF/xmega/drivers/spi/spi.h \
+ ../src/ASF/xmega/utils/status_codes.h \
+ ../src/ASF/common/services/spi/xmega_spi/spi_master.h \
+ ../src/Config/conf_spi_master.h
 
 .././spi_memory_25lcxx.h:
 
@@ -174,3 +177,11 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 ../libscp/include/csp/interfaces/csp_if_i2c.h:
 
 ../libscp/include/csp/csp_interface.h:
+
+../src/ASF/xmega/drivers/spi/spi.h:
+
+../src/ASF/xmega/utils/status_codes.h:
+
+../src/ASF/common/services/spi/xmega_spi/spi_master.h:
+
+../src/Config/conf_spi_master.h:

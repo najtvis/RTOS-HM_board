@@ -8,6 +8,7 @@
 #include "mainTask.h"
 #include "cspTask.h"
 #include "system.h"
+#include "spi_memory_25lcxx.h"
 
 csp_packet_t * outcomingPacket;
 
@@ -42,10 +43,17 @@ int houseKeeping(csp_packet_t * inPacket) {
 	
 	// put the info message into the packet
 	char msg[64];
-	sprintf(msg, "*** Board\n\rSoftware HM board v1.0\n\rUptime: %id %ih %im %ds\n\r", (int16_t) hoursTimer/24, (int16_t) hoursTimer%24, (int16_t) secondsTimer/60, (int16_t) secondsTimer%60);
+	char read_value;
+	spi_mem_write_byte(62,22);
+	read_value = spi_mem_read_byte(62);
+	
+	sprintf(msg, "*** Board\n\rSoftware HM board v1.0\n\rUptime: %id %ih %im %ds\n\r%d\n\r", (int16_t) hoursTimer/24, (int16_t) hoursTimer%24, (int16_t) secondsTimer/60, (int16_t) secondsTimer%60, read_value);
 
 	strcpy(outcomingPacket->data, msg);
 	outcomingPacket->length = strlen(msg);
+	
+	
+	
 
 	/* Send packet */
 	if (csp_sendto(CSP_PRIO_NORM, inPacket->id.src, inPacket->id.sport, inPacket->id.dport, CSP_O_NONE, outcomingPacket, 1000) == CSP_ERR_NONE) {

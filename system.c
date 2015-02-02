@@ -10,7 +10,7 @@
  #include "TC_driver.h"
  #include "clksys_driver.h"
  #include "timers.h"
- //#include "spi_memory_25lcxx.h"
+ #include "spi_memory_25lcxx.h"
  
  volatile uint32_t milisecondsTimer;
  volatile uint32_t secondsTimer;
@@ -35,7 +35,7 @@ void boardInit() {
 	enable_xtal();
 	
 	// enable SPI communication on port C for SPI memory
-	//spi_mem_init();	
+	spi_mem_init();
 	
 	sysclk_enable_module(SYSCLK_PORT_GEN, 0xff);
 	sysclk_enable_module(SYSCLK_PORT_A, 0xff);

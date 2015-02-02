@@ -49,7 +49,8 @@ mainTask.d mainTask.o: .././mainTask.c .././mainTask.h .././system.h \
  ../libscp/include/csp/arch/csp_clock.h \
  ../libscp/include/csp/interfaces/csp_if_i2c.h \
  ../libscp/include/csp/csp_interface.h .././cspTask.h \
- ../FreeRTOS/Source/include/queue.h
+ ../FreeRTOS/Source/include/queue.h .././spi_memory_25lcxx.h \
+ ../src/ASF/xmega/drivers/spi/spi.h ../src/ASF/xmega/utils/status_codes.h
 
 .././mainTask.h:
 
@@ -178,3 +179,9 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 .././cspTask.h:
 
 ../FreeRTOS/Source/include/queue.h:
+
+.././spi_memory_25lcxx.h:
+
+../src/ASF/xmega/drivers/spi/spi.h:
+
+../src/ASF/xmega/utils/status_codes.h:

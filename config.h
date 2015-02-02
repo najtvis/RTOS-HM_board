@@ -43,7 +43,7 @@
 /*	CSP define															*/
 /* -------------------------------------------------------------------- */
 // Address of the local CSP node
-#define CSP_MY_ADDRESS	4		// Deska HM
+#define CSP_MY_ADDRESS	6		// Deska HM
 
 // Address of the OBC CSP node
 #define CSP_OBC_ADDRESS	1	
@@ -79,7 +79,8 @@
 #define CSP_I2C_BAUDRATE	400000
 #define CSP_I2C_BAUDSETTING TWI_BAUD(F_CPU, CSP_I2C_BAUDRATE)
 
-#define SPI_MEM_INTERFACE SPIC
+#define SPI_MEM_INTERFACE	SPIC
+#define SPI_PORT			PORTC
 
 
 

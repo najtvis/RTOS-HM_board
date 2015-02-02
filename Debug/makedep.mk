@@ -86,6 +86,10 @@ MyDrivers\usart_driver_RTOS.c
 
 spi_memory_25lcxx.c
 
+src\ASF\common\services\spi\xmega_spi\spi_master.c
+
+src\ASF\xmega\drivers\spi\spi.c
+
 system.c
 
 src\ASF\common\services\clock\xmega\sysclk.c

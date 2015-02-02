@@ -1,5 +1,6 @@
 #include "system.h"
 #include "config.h"
+#include "spi.h"
 
 #ifndef COMPLEX_STRUCT
 #define COMPLEX_STRUCT
@@ -24,11 +25,10 @@ void spi_mem_write_complex(unsigned long address, complex data);
 
 void spi_mem_read_page(unsigned long address, unsigned char no_pages);
 unsigned int spi_mem_read_word(unsigned long address);
-unsigned char spi_mem_read_byte(unsigned long address);
+char spi_mem_read_byte(unsigned long address);
 complex spi_mem_read_complex(unsigned long address);
 
-void memory_send(unsigned char c);
-unsigned char memory_read(void);
+
 unsigned char memory_read_status(void);
 bool memory_ready_write(void);
 void memory_unprotect(void);
@@ -46,10 +46,5 @@ void spi_mem_init(void);
 #define SET_MEM_CS_LOW ioport_set_pin_low(MEM_CS);
 // Macro used to drive the SPIC /SS signal high in order to deselect the slave
 #define SET_MEM_CS_HIGH ioport_set_pin_high(MEM_CS);
-
-// Macro used to drive the SPI memory /WP signal low in order to write protect
-#define SET_WP_LOW ioport_set_pin_low(MEM_WP);
-// Macro used to drive the SPI memory /WP signal high in order to write unprotect
-#define SET_WP_HIGH ioport_set_pin_low(MEM_WP);
 
 #endif
