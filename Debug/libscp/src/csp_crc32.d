@@ -7,8 +7,7 @@ libscp/src/csp_crc32.d libscp/src/csp_crc32.o: ../libscp/src/csp_crc32.c \
  ../libscp/include/csp/csp.h ../libscp/include/csp/csp_autoconfig.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdbool.h \
  ../libscp/include/csp/csp_platform.h \
- ../FreeRTOS/Source/include/FreeRTOS.h \
- ../FreeRTOS/Source/include/projdefs.h ../FreeRTOS/FreeRTOSConfig.h \
+ ../FreeRTOS/Source/include/FreeRTOS.h ../FreeRTOS/FreeRTOSConfig.h \
  ../MyDrivers/avr_compiler.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\avr\io.h \
@@ -25,8 +24,10 @@ libscp/src/csp_crc32.d libscp/src/csp_crc32.o: ../libscp/src/csp_crc32.c \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\util\delay.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\math.h \
- ../FreeRTOS/Source/include/portable.h ../FreeRTOS/Port/portmacro.h \
- ../FreeRTOS/Source/include/mpu_wrappers.h \
+ ../FreeRTOS/Source/include/projdefs.h \
+ ../FreeRTOS/Source/include/portable.h \
+ ../FreeRTOS/Source/include/deprecated_definitions.h \
+ ../FreeRTOS/Port/portmacro.h ../FreeRTOS/Source/include/mpu_wrappers.h \
  ../libscp/include/csp/csp_error.h ../libscp/include/csp/csp_debug.h \
  ../libscp/include/csp/csp_buffer.h ../libscp/include/csp/csp_endian.h
 
@@ -49,8 +50,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 ../libscp/include/csp/csp_platform.h:
 
 ../FreeRTOS/Source/include/FreeRTOS.h:
-
-../FreeRTOS/Source/include/projdefs.h:
 
 ../FreeRTOS/FreeRTOSConfig.h:
 
@@ -86,7 +85,11 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\math.h:
 
+../FreeRTOS/Source/include/projdefs.h:
+
 ../FreeRTOS/Source/include/portable.h:
+
+../FreeRTOS/Source/include/deprecated_definitions.h:
 
 ../FreeRTOS/Port/portmacro.h:
 

@@ -82,14 +82,14 @@ typedef enum TWIM_RESULT_enum {
 } TWIM_RESULT_t;
 
 /*! Buffer size defines */
-#define TWIM_WRITE_BUFFER_SIZE         72
-#define TWIM_READ_BUFFER_SIZE          1
+#define TWIM_WRITE_BUFFER_SIZE         255
+#define TWIM_READ_BUFFER_SIZE          20
 
 
 /*! \brief TWI master driver struct
  *
  *  TWI master struct. Holds pointer to TWI module,
- *  buffers and necessary varibles.
+ *  buffers and necessary variables.
  */
 typedef struct TWI_Master {
 	TWI_t *interface;                  /*!< Pointer to what interface to use */

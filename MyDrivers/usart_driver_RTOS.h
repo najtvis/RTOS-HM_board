@@ -45,8 +45,8 @@ typedef struct UsartStructDefenition
 	/* \brief Data register empty interrupt level. */
 	USART_DREINTLVL_t dreIntLevel;
 	/* \brief Data buffer. */
-	xQueueHandle xQueueRX;
-	xQueueHandle xQueueTX;
+	QueueHandle_t xQueueRX;
+	QueueHandle_t xQueueTX;
 } UsartBuffer;
 
 /* Functions for interrupt driven driver. */

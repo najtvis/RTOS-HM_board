@@ -16,7 +16,6 @@
 #include "csp_clock.h"
 #include "csp_if_i2c.h"
 
-
 // POWER_SWITCH on PORTE.3
 #define	POWER_SWITCH			IOPORT_CREATE_PIN(PORTE, 3)
 #define	MEM_CS					IOPORT_CREATE_PIN(PORTC, 4)
@@ -25,13 +24,13 @@
 #define power_switch_on()		ioport_set_pin_level(POWER_SWITCH, false)
 #define power_switch_off()		ioport_set_pin_level(POWER_SWITCH, true)
 #define power_switch_toggle()	ioport_toggle_pin_level(POWER_SWITCH)
-	
+
 /* -------------------------------------------------------------------- */
 /*	RTC																	*/
 /* -------------------------------------------------------------------- */
-extern volatile uint32_t milisecondsTimer;
-extern volatile uint32_t secondsTimer;
-extern volatile uint32_t hoursTimer;
+extern volatile unsigned long milisecondsTimer;
+extern volatile unsigned long secondsTimer;
+extern volatile unsigned long hoursTimer;
 
 /* -------------------------------------------------------------------- */
 /*	Initialize the xMega peripherals									*/
@@ -39,5 +38,7 @@ extern volatile uint32_t hoursTimer;
 void boardInit();
 void timerRTC(void *p);
 void enable_xtal(void);
+void adc_init(void);
+unsigned int adca_read_ch0(void);
 
 #endif /* SYSTEM_H_ */

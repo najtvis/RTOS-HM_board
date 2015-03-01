@@ -36,12 +36,26 @@ csp_interface.d csp_interface.o: .././csp_interface.c \
  ../src/ASF/common/services/ioport/xmega/ioport.h \
  ../src/ASF/common/services/ioport/xmega/ioport_compat.h \
  ../src/ASF/common/services/ioport/xmega/../ioport.h .././system.h \
- .././config.h ../libscp/include/csp/csp.h \
+ .././config.h ../src/ASF/xmega/drivers/adc/adc.h \
+ ../src/Config/conf_adc.h ../src/ASF/xmega/drivers/nvm/nvm.h \
+ ../src/ASF/xmega/drivers/cpu/ccp.h \
+ ../src/ASF/common/services/sleepmgr/sleepmgr.h \
+ ../src/ASF/common/services/sleepmgr/xmega/sleepmgr.h \
+ ../src/Config/conf_sleepmgr.h ../src/ASF/xmega/drivers/sleep/sleep.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\avr\sleep.h \
+ ../src/ASF/common/services/clock/sysclk.h ../src/Config/conf_clock.h \
+ ../src/ASF/common/services/clock/xmega/sysclk.h \
+ ../src/ASF/common/boards/board.h ../src/ASF/common/boards/user_board.h \
+ ../src/ASF/common/services/clock/osc.h \
+ ../src/ASF/common/services/clock/xmega/osc.h \
+ ../src/ASF/common/services/clock/pll.h \
+ ../src/ASF/common/services/clock/xmega/pll.h ../libscp/include/csp/csp.h \
  ../libscp/include/csp/csp_autoconfig.h \
  ../libscp/include/csp/csp_platform.h \
- ../FreeRTOS/Source/include/FreeRTOS.h \
- ../FreeRTOS/Source/include/projdefs.h ../FreeRTOS/FreeRTOSConfig.h \
- ../MyDrivers/avr_compiler.h ../FreeRTOS/Source/include/portable.h \
+ ../FreeRTOS/Source/include/FreeRTOS.h ../FreeRTOS/FreeRTOSConfig.h \
+ ../MyDrivers/avr_compiler.h ../FreeRTOS/Source/include/projdefs.h \
+ ../FreeRTOS/Source/include/portable.h \
+ ../FreeRTOS/Source/include/deprecated_definitions.h \
  ../FreeRTOS/Port/portmacro.h ../FreeRTOS/Source/include/mpu_wrappers.h \
  ../libscp/include/csp/csp_error.h ../libscp/include/csp/csp_debug.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\string.h \
@@ -136,6 +150,42 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 
 .././config.h:
 
+../src/ASF/xmega/drivers/adc/adc.h:
+
+../src/Config/conf_adc.h:
+
+../src/ASF/xmega/drivers/nvm/nvm.h:
+
+../src/ASF/xmega/drivers/cpu/ccp.h:
+
+../src/ASF/common/services/sleepmgr/sleepmgr.h:
+
+../src/ASF/common/services/sleepmgr/xmega/sleepmgr.h:
+
+../src/Config/conf_sleepmgr.h:
+
+../src/ASF/xmega/drivers/sleep/sleep.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\avr\sleep.h:
+
+../src/ASF/common/services/clock/sysclk.h:
+
+../src/Config/conf_clock.h:
+
+../src/ASF/common/services/clock/xmega/sysclk.h:
+
+../src/ASF/common/boards/board.h:
+
+../src/ASF/common/boards/user_board.h:
+
+../src/ASF/common/services/clock/osc.h:
+
+../src/ASF/common/services/clock/xmega/osc.h:
+
+../src/ASF/common/services/clock/pll.h:
+
+../src/ASF/common/services/clock/xmega/pll.h:
+
 ../libscp/include/csp/csp.h:
 
 ../libscp/include/csp/csp_autoconfig.h:
@@ -144,13 +194,15 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 
 ../FreeRTOS/Source/include/FreeRTOS.h:
 
-../FreeRTOS/Source/include/projdefs.h:
-
 ../FreeRTOS/FreeRTOSConfig.h:
 
 ../MyDrivers/avr_compiler.h:
 
+../FreeRTOS/Source/include/projdefs.h:
+
 ../FreeRTOS/Source/include/portable.h:
+
+../FreeRTOS/Source/include/deprecated_definitions.h:
 
 ../FreeRTOS/Port/portmacro.h:
 

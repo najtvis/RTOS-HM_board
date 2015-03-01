@@ -6,11 +6,15 @@ cspTask.c
 
 csp_interface.c
 
+fft_memory.c
+
 FreeRTOS\Port\heap_1.c
 
 FreeRTOS\Port\port.c
 
 FreeRTOS\Source\croutine.c
+
+FreeRTOS\Source\event_groups.c
 
 FreeRTOS\Source\list.c
 
@@ -19,6 +23,8 @@ FreeRTOS\Source\queue.c
 FreeRTOS\Source\tasks.c
 
 FreeRTOS\Source\timers.c
+
+libscp\src\arch\freertos\csp_clock.c
 
 libscp\src\arch\freertos\csp_malloc.c
 
@@ -60,7 +66,11 @@ libscp\src\csp_service_handler.c
 
 libscp\src\csp_sfp.c
 
+libscp\src\interfaces\csp_if_can.c
+
 libscp\src\interfaces\csp_if_i2c.c
+
+libscp\src\interfaces\csp_if_kiss.c
 
 libscp\src\interfaces\csp_if_lo.c
 
@@ -72,7 +82,11 @@ main.c
 
 mainTask.c
 
+MyDrivers\ADT7420.c
+
 MyDrivers\clksys_driver.c
+
+MyDrivers\pmic_driver.c
 
 MyDrivers\port_driver.c
 
@@ -84,9 +98,15 @@ MyDrivers\twi_slave_driver.c
 
 MyDrivers\usart_driver_RTOS.c
 
-spi_memory_25lcxx.c
+spi_memory_23lcxx.c
+
+src\ASF\common\services\sleepmgr\xmega\sleepmgr.c
 
 src\ASF\common\services\spi\xmega_spi\spi_master.c
+
+src\ASF\xmega\drivers\adc\adc.c
+
+src\ASF\xmega\drivers\adc\xmega_aau\adc_aau.c
 
 src\ASF\xmega\drivers\spi\spi.c
 

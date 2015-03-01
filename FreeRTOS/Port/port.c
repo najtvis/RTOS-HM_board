@@ -162,8 +162,7 @@ static void prvSetupTimerInterrupt(void);
 
 /* 
  * See header file for description. 
- */portSTACK_TYPE *pxPortInitialiseStack(portSTACK_TYPE *pxTopOfStack,
-        pdTASK_CODE pxCode, void *pvParameters) {
+ */char *pxPortInitialiseStack(char *pxTopOfStack, TaskFunction_t pxCode, void *pvParameters) {
     /*The addresses are 16 or 24 bit depending on the xmega memory, so use 32 bit variable but put only a
      * part to stack.*/
     uint16_t usAddress;
@@ -331,15 +330,15 @@ void vPortYield(void) {
 /*-----------------------------------------------------------*/
 
 /*
- * Setup timer 0 compare match A to generate a tick interrupt.
+ * Setup timer 1 compare match A to generate a tick interrupt.
  */
 static void prvSetupTimerInterrupt(void) {
     //Use TCC0 as a tick counter. If this is to be changed, change ISR as well
     TC0_t * tickTimer = &TCC0;
     //select the clock source and pre-scale by 64
-    TC0_ConfigClockSource(tickTimer, TC_CLKSEL_DIV1_gc);
+    TC0_ConfigClockSource(tickTimer, TC_CLKSEL_DIV64_gc);
     //set period of counter
-    tickTimer->PER = configCPU_CLOCK_HZ / configTICK_RATE_HZ - 1;
+    tickTimer->PER = configCPU_CLOCK_HZ / configTICK_RATE_HZ / 64 - 1;
 
     //enable interrupt and set low level
     TC0_SetOverflowIntLevel(tickTimer, TC_OVFINTLVL_LO_gc);
@@ -364,7 +363,7 @@ ISR (TCC0_OVF_vect, ISR_NAKED) {
      * call comes from the tick ISR.
      */
     portSAVE_CONTEXT();
-    vTaskIncrementTick();
+    xTaskIncrementTick();
     vTaskSwitchContext();
     portRESTORE_CONTEXT();
     asm volatile ( "reti" );
@@ -379,6 +378,6 @@ ISR (TCC0_OVF_vect, ISR_NAKED) {
  */
 ISR (TCC0_OVF_vect, ISR_NAKED)
 {
-    vTaskIncrementTick();
+    xTaskIncrementTick();
 }
 #endif

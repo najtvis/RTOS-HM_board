@@ -7,7 +7,7 @@
 
 #include "cspTask.h"
 
-xQueueHandle * xCSPEventQueue;
+QueueHandle_t * xCSPEventQueue;
 
 /* -------------------------------------------------------------------- */
 /*	Task that handles CSP incoming packets								*/
@@ -39,7 +39,7 @@ void cspTask(void *p) {
 		continue;
 
 		/* Read packets. Timout is 1000 ms */
-		while ((packet = csp_read(conn, 10)) != NULL) {
+		while ((packet = csp_read(conn, 100)) != NULL) {
 			switch (csp_conn_dport(conn)) {
 				
 				/* if Port 15 packet received */
@@ -48,7 +48,7 @@ void cspTask(void *p) {
 				
 					newEvent->eEventType = echoBackEvent;
 					newEvent->pvData = packet;
-					xQueueSend(xCSPEventQueue, newEvent, 10);
+					xQueueSend(xCSPEventQueue, newEvent, 100);
 					
 				break;
 					
@@ -58,7 +58,7 @@ void cspTask(void *p) {
 				
 					newEvent->eEventType = freeHeapEvent;
 					newEvent->pvData = packet;
-					xQueueSend(xCSPEventQueue, newEvent, 10);	
+					xQueueSend(xCSPEventQueue, newEvent, 100);	
 					
 				break;	
 				
@@ -70,7 +70,58 @@ void cspTask(void *p) {
 					newEvent->pvData = packet;
 					xQueueSend(xCSPEventQueue, newEvent, 10);
 				
-				break;		
+				break;	
+				
+				/* if Port 18 packet received */
+				// Start measure and calculate all
+				case 18:
+				
+				newEvent->eEventType = processAllEvent;
+				newEvent->pvData = packet;
+				xQueueSend(xCSPEventQueue, newEvent, 100);
+				
+				break;
+				
+				/* if Port 19 packet received */
+				// Return sampled signal
+				case 19:
+				
+				newEvent->eEventType = sendSignalEvent;
+				newEvent->pvData = packet;
+				xQueueSend(xCSPEventQueue, newEvent, 100);
+				
+				break;
+				
+				/* if Port 20 packet received */
+				// Return calculated FFT
+				case 20:
+				
+				newEvent->eEventType = sendFFTEvent;
+				newEvent->pvData = packet;
+				xQueueSend(xCSPEventQueue, newEvent, 100);
+				
+				break;
+				
+				/* if Port 21 packet received */
+				// Return summary info of calculated signal (resonant frequency and attenuation coefficient)
+				case 21:
+				
+				newEvent->eEventType = sendSummaryInfoEvent;
+				newEvent->pvData = packet;
+				xQueueSend(xCSPEventQueue, newEvent, 100);
+				
+				break;	
+				
+				/* if Port 22 packet received */
+				// Return computed attenuation signal
+				case 22:
+				
+				newEvent->eEventType = sendAttenuationEvent;
+				newEvent->pvData = packet;
+				xQueueSend(xCSPEventQueue, newEvent, 100);
+				
+				break;
+				
 				
 				/* Process packet here */
 				default:

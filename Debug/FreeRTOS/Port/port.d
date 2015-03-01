@@ -22,8 +22,9 @@ FreeRTOS/Port/port.d FreeRTOS/Port/port.o: ../FreeRTOS/Port/port.c \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\math.h \
  ../FreeRTOS/FreeRTOSConfig.h ../FreeRTOS/Source/include/FreeRTOS.h \
  ../FreeRTOS/Source/include/projdefs.h \
- ../FreeRTOS/Source/include/portable.h ../FreeRTOS/Port/portmacro.h \
- ../FreeRTOS/Source/include/mpu_wrappers.h \
+ ../FreeRTOS/Source/include/portable.h \
+ ../FreeRTOS/Source/include/deprecated_definitions.h \
+ ../FreeRTOS/Port/portmacro.h ../FreeRTOS/Source/include/mpu_wrappers.h \
  ../FreeRTOS/Source/include/task.h ../FreeRTOS/Source/include/list.h \
  ../MyDrivers/TC_driver.h ../MyDrivers/avr_compiler.h \
  ../MyDrivers/pmic_driver.h
@@ -77,6 +78,8 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 ../FreeRTOS/Source/include/projdefs.h:
 
 ../FreeRTOS/Source/include/portable.h:
+
+../FreeRTOS/Source/include/deprecated_definitions.h:
 
 ../FreeRTOS/Port/portmacro.h:
 

@@ -42,7 +42,7 @@ extern "C" {
 #define portLONG        long
 #define portSHORT       int
 //#define portSTACK_TYPE    unsigned portCHAR
-#define portSTACK_TYPE   uint_fast8_t
+#define portSTACK_TYPE   unsigned char //uint_fast8_t
 #define portBASE_TYPE    char
 
 #if( configUSE_16_BIT_TICKS == 1 )

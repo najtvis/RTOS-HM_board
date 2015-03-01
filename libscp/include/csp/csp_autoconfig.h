@@ -11,7 +11,7 @@
 
 #define GIT_REV "unknown"
 #define CSP_FREERTOS	1 
-#define FREERTOS_VERSION 6
+#define FREERTOS_VERSION 8
 #undef CSP_POSIX 
 #undef CSP_WINDOWS
 #undef CSP_MACOSX 

@@ -74,7 +74,7 @@
  *  \param address A pointer to the address to write to.
  *  \param value   The value to put in to the register.
  */
-void CCPWrite( volatile uint8_t * address, uint8_t value )
+void CCPWrite( volatile unsigned char * address, unsigned char value )
 {
 #ifdef __ICCAVR__
 
@@ -106,7 +106,7 @@ void CCPWrite( volatile uint8_t * address, uint8_t value )
 
 #elif defined __GNUC__
         AVR_ENTER_CRITICAL_REGION( );
-        volatile uint8_t * tmpAddr = address;
+        volatile unsigned char * tmpAddr = address;
 #ifdef RAMPZ
         RAMPZ = 0;
 #endif
@@ -142,7 +142,7 @@ void CLKSYS_XOSC_Config( OSC_FRQRANGE_t freqRange,
                          bool lowPower32kHz,
                          OSC_XOSCSEL_t xoscModeSelection )
 {
-        OSC.XOSCCTRL = (uint8_t) freqRange |
+        OSC.XOSCCTRL = (unsigned char) freqRange |
                        ( lowPower32kHz ? OSC_X32KLPM_bm : 0 ) |
                        xoscModeSelection;
 }
@@ -164,10 +164,10 @@ void CLKSYS_XOSC_Config( OSC_FRQRANGE_t freqRange,
  *  \param  factor      PLL multiplication factor, must be
  *                      from 1 to 31, inclusive.
  */
-void CLKSYS_PLL_Config( OSC_PLLSRC_t clockSource, uint8_t factor )
+void CLKSYS_PLL_Config( OSC_PLLSRC_t clockSource, unsigned char factor )
 {
         factor &= OSC_PLLFAC_gm;
-        OSC.PLLCTRL = (uint8_t) clockSource | ( factor << OSC_PLLFAC_gp );
+        OSC.PLLCTRL = (unsigned char) clockSource | ( factor << OSC_PLLFAC_gp );
 }
 
 
@@ -184,10 +184,10 @@ void CLKSYS_PLL_Config( OSC_PLLSRC_t clockSource, uint8_t factor )
  *
  *  \return  Non-zero if oscillator was disabled successfully.
  */
-uint8_t CLKSYS_Disable( uint8_t oscSel )
+unsigned char CLKSYS_Disable( unsigned char oscSel )
 {
         OSC.CTRL &= ~oscSel;
-        uint8_t clkEnabled = OSC.CTRL & oscSel;
+        unsigned char clkEnabled = OSC.CTRL & oscSel;
         return clkEnabled;
 }
 
@@ -206,7 +206,7 @@ uint8_t CLKSYS_Disable( uint8_t oscSel )
 void CLKSYS_Prescalers_Config( CLK_PSADIV_t PSAfactor,
                                CLK_PSBCDIV_t PSBCfactor )
 {
-        uint8_t PSconfig = (uint8_t) PSAfactor | PSBCfactor;
+        unsigned char PSconfig = (unsigned char) PSAfactor | PSBCfactor;
         CCPWrite( &CLK.PSCTRL, PSconfig );
 }
 
@@ -222,9 +222,9 @@ void CLKSYS_Prescalers_Config( CLK_PSADIV_t PSAfactor,
  *
  *  \return  Non-zero if change was successful.
  */
-uint8_t CLKSYS_Main_ClockSource_Select( CLK_SCLKSEL_t clockSource )
+unsigned char CLKSYS_Main_ClockSource_Select( CLK_SCLKSEL_t clockSource )
 {
-        uint8_t clkCtrl = ( CLK.CTRL & ~CLK_SCLKSEL_gm ) | clockSource;
+        unsigned char clkCtrl = ( CLK.CTRL & ~CLK_SCLKSEL_gm ) | clockSource;
         CCPWrite( &CLK.CTRL, clkCtrl );
         clkCtrl = ( CLK.CTRL & clockSource );
         return clkCtrl;
@@ -257,7 +257,7 @@ void CLKSYS_RTC_ClockSource_Enable( CLK_RTCSRC_t clockSource )
  *                       OSC_RC32MCREF_bm.
  *  \param  extReference True if external crystal should be used as reference.
  */
-void CLKSYS_AutoCalibration_Enable( uint8_t clkSource, bool extReference )
+void CLKSYS_AutoCalibration_Enable( unsigned char clkSource, bool extReference )
 {
         OSC.DFLLCTRL = ( OSC.DFLLCTRL & ~clkSource ) |
                        ( extReference ? clkSource : 0 );

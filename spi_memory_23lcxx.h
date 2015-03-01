@@ -2,20 +2,15 @@
 #include "config.h"
 #include "spi.h"
 
-#ifndef COMPLEX_STRUCT
-#define COMPLEX_STRUCT
-
-typedef struct               // one point is 4 bytes large
-{
-	long real;
-	long imag;
-} complex;
-
-#endif
-
-
 #ifndef SPI_MEMORY
 #define SPI_MEMORY
+
+typedef struct               // one point is 8 bytes large
+{
+	float real;
+	float imag;
+} complex;
+
 
 void spi_mem_write_page(unsigned long address, unsigned int no_pages);
 void spi_mem_write_word(unsigned long address, unsigned int data);
@@ -41,10 +36,5 @@ void spi_mem_init(void);
 #define SPI_WRDI 0x04		// reset the write enable latch - disable write operations
 #define SPI_RDSR 0x05		// read status register
 #define SPI_WRSR 0x01		// write status register
-
-// Macro used to drive the SPIC /SS signal low in order to select the slave
-#define SET_MEM_CS_LOW ioport_set_pin_low(MEM_CS);
-// Macro used to drive the SPIC /SS signal high in order to deselect the slave
-#define SET_MEM_CS_HIGH ioport_set_pin_high(MEM_CS);
 
 #endif

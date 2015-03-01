@@ -32,6 +32,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <csp/arch/csp_semaphore.h>
 #include <csp/arch/csp_queue.h>
 
+#include "../FreeRTOS/Source/include/task.h"
+#include "../FreeRTOS/Source/include/queue.h"
+
 int csp_mutex_create(csp_mutex_t * mutex) {
 	*mutex = xSemaphoreCreateMutex();
 	if (*mutex) {

@@ -21,9 +21,9 @@ mainTask.d mainTask.o: .././mainTask.c .././mainTask.h .././system.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\util\delay.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\math.h \
- ../src/ASF/common/services/ioport/ioport.h \
- ../src/ASF/common/utils/parts.h ../src/ASF/xmega/utils/compiler.h \
+ ../src/ASF/xmega/drivers/adc/adc.h ../src/ASF/xmega/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\avr\builtins.h \
+ ../src/ASF/common/utils/parts.h \
  ../src/ASF/xmega/utils/bit_handling/clz_ctz.h \
  ../src/ASF/xmega/utils/preprocessor/preprocessor.h \
  ../src/ASF/xmega/utils/preprocessor/tpaste.h \
@@ -32,14 +32,29 @@ mainTask.d mainTask.o: .././mainTask.c .././mainTask.h .././system.h \
  ../src/ASF/xmega/utils/preprocessor/preprocessor.h \
  ../src/ASF/xmega/utils/progmem.h ../src/ASF/common/utils/interrupt.h \
  ../src/ASF/common/utils/interrupt/interrupt_avr8.h \
+ ../src/Config/conf_adc.h ../src/ASF/xmega/drivers/nvm/nvm.h \
+ ../src/ASF/xmega/drivers/cpu/ccp.h \
+ ../src/ASF/common/services/sleepmgr/sleepmgr.h \
+ ../src/ASF/common/services/sleepmgr/xmega/sleepmgr.h \
+ ../src/Config/conf_sleepmgr.h ../src/ASF/xmega/drivers/sleep/sleep.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\avr\sleep.h \
+ ../src/ASF/common/services/clock/sysclk.h ../src/Config/conf_clock.h \
+ ../src/ASF/common/services/clock/xmega/sysclk.h \
+ ../src/ASF/common/boards/board.h ../src/ASF/common/boards/user_board.h \
+ ../src/ASF/common/services/clock/osc.h \
+ ../src/ASF/common/services/clock/xmega/osc.h \
+ ../src/ASF/common/services/clock/pll.h \
+ ../src/ASF/common/services/clock/xmega/pll.h \
+ ../src/ASF/common/services/ioport/ioport.h \
  ../src/ASF/common/services/ioport/xmega/ioport.h \
  ../src/ASF/common/services/ioport/xmega/ioport_compat.h \
  ../src/ASF/common/services/ioport/xmega/../ioport.h \
  ../libscp/include/csp/csp.h ../libscp/include/csp/csp_autoconfig.h \
  ../libscp/include/csp/csp_platform.h \
- ../FreeRTOS/Source/include/FreeRTOS.h \
- ../FreeRTOS/Source/include/projdefs.h ../FreeRTOS/FreeRTOSConfig.h \
- ../MyDrivers/avr_compiler.h ../FreeRTOS/Source/include/portable.h \
+ ../FreeRTOS/Source/include/FreeRTOS.h ../FreeRTOS/FreeRTOSConfig.h \
+ ../MyDrivers/avr_compiler.h ../FreeRTOS/Source/include/projdefs.h \
+ ../FreeRTOS/Source/include/portable.h \
+ ../FreeRTOS/Source/include/deprecated_definitions.h \
  ../FreeRTOS/Port/portmacro.h ../FreeRTOS/Source/include/mpu_wrappers.h \
  ../libscp/include/csp/csp_error.h ../libscp/include/csp/csp_debug.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\string.h \
@@ -49,8 +64,9 @@ mainTask.d mainTask.o: .././mainTask.c .././mainTask.h .././system.h \
  ../libscp/include/csp/arch/csp_clock.h \
  ../libscp/include/csp/interfaces/csp_if_i2c.h \
  ../libscp/include/csp/csp_interface.h .././cspTask.h \
- ../FreeRTOS/Source/include/queue.h .././spi_memory_25lcxx.h \
- ../src/ASF/xmega/drivers/spi/spi.h ../src/ASF/xmega/utils/status_codes.h
+ ../FreeRTOS/Source/include/queue.h .././spi_memory_23lcxx.h \
+ ../src/ASF/xmega/drivers/spi/spi.h ../src/ASF/xmega/utils/status_codes.h \
+ .././fft_memory.h ../MyDrivers/TC_driver.h
 
 .././mainTask.h:
 
@@ -102,13 +118,13 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\math.h:
 
-../src/ASF/common/services/ioport/ioport.h:
-
-../src/ASF/common/utils/parts.h:
+../src/ASF/xmega/drivers/adc/adc.h:
 
 ../src/ASF/xmega/utils/compiler.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\avr\builtins.h:
+
+../src/ASF/common/utils/parts.h:
 
 ../src/ASF/xmega/utils/bit_handling/clz_ctz.h:
 
@@ -128,6 +144,42 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 
 ../src/ASF/common/utils/interrupt/interrupt_avr8.h:
 
+../src/Config/conf_adc.h:
+
+../src/ASF/xmega/drivers/nvm/nvm.h:
+
+../src/ASF/xmega/drivers/cpu/ccp.h:
+
+../src/ASF/common/services/sleepmgr/sleepmgr.h:
+
+../src/ASF/common/services/sleepmgr/xmega/sleepmgr.h:
+
+../src/Config/conf_sleepmgr.h:
+
+../src/ASF/xmega/drivers/sleep/sleep.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\avr\sleep.h:
+
+../src/ASF/common/services/clock/sysclk.h:
+
+../src/Config/conf_clock.h:
+
+../src/ASF/common/services/clock/xmega/sysclk.h:
+
+../src/ASF/common/boards/board.h:
+
+../src/ASF/common/boards/user_board.h:
+
+../src/ASF/common/services/clock/osc.h:
+
+../src/ASF/common/services/clock/xmega/osc.h:
+
+../src/ASF/common/services/clock/pll.h:
+
+../src/ASF/common/services/clock/xmega/pll.h:
+
+../src/ASF/common/services/ioport/ioport.h:
+
 ../src/ASF/common/services/ioport/xmega/ioport.h:
 
 ../src/ASF/common/services/ioport/xmega/ioport_compat.h:
@@ -142,13 +194,15 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 
 ../FreeRTOS/Source/include/FreeRTOS.h:
 
-../FreeRTOS/Source/include/projdefs.h:
-
 ../FreeRTOS/FreeRTOSConfig.h:
 
 ../MyDrivers/avr_compiler.h:
 
+../FreeRTOS/Source/include/projdefs.h:
+
 ../FreeRTOS/Source/include/portable.h:
+
+../FreeRTOS/Source/include/deprecated_definitions.h:
 
 ../FreeRTOS/Port/portmacro.h:
 
@@ -180,8 +234,12 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 
 ../FreeRTOS/Source/include/queue.h:
 
-.././spi_memory_25lcxx.h:
+.././spi_memory_23lcxx.h:
 
 ../src/ASF/xmega/drivers/spi/spi.h:
 
 ../src/ASF/xmega/utils/status_codes.h:
+
+.././fft_memory.h:
+
+../MyDrivers/TC_driver.h:

@@ -61,6 +61,8 @@ SUBDIRS :=  \
 ../src/ASF/common/services/delay/xmega/ \
 ../src/ASF/common/services/ioport/ \
 ../src/ASF/common/services/ioport/xmega/ \
+../src/ASF/common/services/sleepmgr/ \
+../src/ASF/common/services/sleepmgr/xmega/ \
 ../src/ASF/common/services/spi/ \
 ../src/ASF/common/services/spi/xmega_spi/ \
 ../src/ASF/common/utils/ \
@@ -68,8 +70,12 @@ SUBDIRS :=  \
 ../src/ASF/common/utils/make/ \
 ../src/ASF/xmega/ \
 ../src/ASF/xmega/drivers/ \
+../src/ASF/xmega/drivers/adc/ \
+../src/ASF/xmega/drivers/adc/xmega_aau/ \
 ../src/ASF/xmega/drivers/cpu/ \
 ../src/ASF/xmega/drivers/nvm/ \
+../src/ASF/xmega/drivers/pmic/ \
+../src/ASF/xmega/drivers/sleep/ \
 ../src/ASF/xmega/drivers/spi/ \
 ../src/ASF/xmega/utils/ \
 ../src/ASF/xmega/utils/assembler/ \
@@ -82,13 +88,16 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../cspTask.c \
 ../csp_interface.c \
+../fft_memory.c \
 ../FreeRTOS/Port/heap_1.c \
 ../FreeRTOS/Port/port.c \
 ../FreeRTOS/Source/croutine.c \
+../FreeRTOS/Source/event_groups.c \
 ../FreeRTOS/Source/list.c \
 ../FreeRTOS/Source/queue.c \
 ../FreeRTOS/Source/tasks.c \
 ../FreeRTOS/Source/timers.c \
+../libscp/src/arch/freertos/csp_clock.c \
 ../libscp/src/arch/freertos/csp_malloc.c \
 ../libscp/src/arch/freertos/csp_queue.c \
 ../libscp/src/arch/freertos/csp_semaphore.c \
@@ -109,20 +118,27 @@ C_SRCS +=  \
 ../libscp/src/csp_services.c \
 ../libscp/src/csp_service_handler.c \
 ../libscp/src/csp_sfp.c \
+../libscp/src/interfaces/csp_if_can.c \
 ../libscp/src/interfaces/csp_if_i2c.c \
+../libscp/src/interfaces/csp_if_kiss.c \
 ../libscp/src/interfaces/csp_if_lo.c \
 ../libscp/src/transport/csp_rdp.c \
 ../libscp/src/transport/csp_udp.c \
 ../main.c \
 ../mainTask.c \
+../MyDrivers/ADT7420.c \
 ../MyDrivers/clksys_driver.c \
+../MyDrivers/pmic_driver.c \
 ../MyDrivers/port_driver.c \
 ../MyDrivers/TC_driver.c \
 ../MyDrivers/twi_master_driver.c \
 ../MyDrivers/twi_slave_driver.c \
 ../MyDrivers/usart_driver_RTOS.c \
-../spi_memory_25lcxx.c \
+../spi_memory_23lcxx.c \
+../src/ASF/common/services/sleepmgr/xmega/sleepmgr.c \
 ../src/ASF/common/services/spi/xmega_spi/spi_master.c \
+../src/ASF/xmega/drivers/adc/adc.c \
+../src/ASF/xmega/drivers/adc/xmega_aau/adc_aau.c \
 ../src/ASF/xmega/drivers/spi/spi.c \
 ../system.c \
 ../src/ASF/common/services/clock/xmega/sysclk.c \
@@ -141,13 +157,16 @@ ASM_SRCS +=
 OBJS +=  \
 cspTask.o \
 csp_interface.o \
+fft_memory.o \
 FreeRTOS/Port/heap_1.o \
 FreeRTOS/Port/port.o \
 FreeRTOS/Source/croutine.o \
+FreeRTOS/Source/event_groups.o \
 FreeRTOS/Source/list.o \
 FreeRTOS/Source/queue.o \
 FreeRTOS/Source/tasks.o \
 FreeRTOS/Source/timers.o \
+libscp/src/arch/freertos/csp_clock.o \
 libscp/src/arch/freertos/csp_malloc.o \
 libscp/src/arch/freertos/csp_queue.o \
 libscp/src/arch/freertos/csp_semaphore.o \
@@ -168,20 +187,27 @@ libscp/src/csp_route.o \
 libscp/src/csp_services.o \
 libscp/src/csp_service_handler.o \
 libscp/src/csp_sfp.o \
+libscp/src/interfaces/csp_if_can.o \
 libscp/src/interfaces/csp_if_i2c.o \
+libscp/src/interfaces/csp_if_kiss.o \
 libscp/src/interfaces/csp_if_lo.o \
 libscp/src/transport/csp_rdp.o \
 libscp/src/transport/csp_udp.o \
 main.o \
 mainTask.o \
+MyDrivers/ADT7420.o \
 MyDrivers/clksys_driver.o \
+MyDrivers/pmic_driver.o \
 MyDrivers/port_driver.o \
 MyDrivers/TC_driver.o \
 MyDrivers/twi_master_driver.o \
 MyDrivers/twi_slave_driver.o \
 MyDrivers/usart_driver_RTOS.o \
-spi_memory_25lcxx.o \
+spi_memory_23lcxx.o \
+src/ASF/common/services/sleepmgr/xmega/sleepmgr.o \
 src/ASF/common/services/spi/xmega_spi/spi_master.o \
+src/ASF/xmega/drivers/adc/adc.o \
+src/ASF/xmega/drivers/adc/xmega_aau/adc_aau.o \
 src/ASF/xmega/drivers/spi/spi.o \
 system.o \
 src/ASF/common/services/clock/xmega/sysclk.o \
@@ -193,13 +219,16 @@ src/ASF/xmega/drivers/cpu/ccp.o
 OBJS_AS_ARGS +=  \
 cspTask.o \
 csp_interface.o \
+fft_memory.o \
 FreeRTOS/Port/heap_1.o \
 FreeRTOS/Port/port.o \
 FreeRTOS/Source/croutine.o \
+FreeRTOS/Source/event_groups.o \
 FreeRTOS/Source/list.o \
 FreeRTOS/Source/queue.o \
 FreeRTOS/Source/tasks.o \
 FreeRTOS/Source/timers.o \
+libscp/src/arch/freertos/csp_clock.o \
 libscp/src/arch/freertos/csp_malloc.o \
 libscp/src/arch/freertos/csp_queue.o \
 libscp/src/arch/freertos/csp_semaphore.o \
@@ -220,20 +249,27 @@ libscp/src/csp_route.o \
 libscp/src/csp_services.o \
 libscp/src/csp_service_handler.o \
 libscp/src/csp_sfp.o \
+libscp/src/interfaces/csp_if_can.o \
 libscp/src/interfaces/csp_if_i2c.o \
+libscp/src/interfaces/csp_if_kiss.o \
 libscp/src/interfaces/csp_if_lo.o \
 libscp/src/transport/csp_rdp.o \
 libscp/src/transport/csp_udp.o \
 main.o \
 mainTask.o \
+MyDrivers/ADT7420.o \
 MyDrivers/clksys_driver.o \
+MyDrivers/pmic_driver.o \
 MyDrivers/port_driver.o \
 MyDrivers/TC_driver.o \
 MyDrivers/twi_master_driver.o \
 MyDrivers/twi_slave_driver.o \
 MyDrivers/usart_driver_RTOS.o \
-spi_memory_25lcxx.o \
+spi_memory_23lcxx.o \
+src/ASF/common/services/sleepmgr/xmega/sleepmgr.o \
 src/ASF/common/services/spi/xmega_spi/spi_master.o \
+src/ASF/xmega/drivers/adc/adc.o \
+src/ASF/xmega/drivers/adc/xmega_aau/adc_aau.o \
 src/ASF/xmega/drivers/spi/spi.o \
 system.o \
 src/ASF/common/services/clock/xmega/sysclk.o \
@@ -245,13 +281,16 @@ src/ASF/xmega/drivers/cpu/ccp.o
 C_DEPS +=  \
 cspTask.d \
 csp_interface.d \
+fft_memory.d \
 FreeRTOS/Port/heap_1.d \
 FreeRTOS/Port/port.d \
 FreeRTOS/Source/croutine.d \
+FreeRTOS/Source/event_groups.d \
 FreeRTOS/Source/list.d \
 FreeRTOS/Source/queue.d \
 FreeRTOS/Source/tasks.d \
 FreeRTOS/Source/timers.d \
+libscp/src/arch/freertos/csp_clock.d \
 libscp/src/arch/freertos/csp_malloc.d \
 libscp/src/arch/freertos/csp_queue.d \
 libscp/src/arch/freertos/csp_semaphore.d \
@@ -272,20 +311,27 @@ libscp/src/csp_route.d \
 libscp/src/csp_services.d \
 libscp/src/csp_service_handler.d \
 libscp/src/csp_sfp.d \
+libscp/src/interfaces/csp_if_can.d \
 libscp/src/interfaces/csp_if_i2c.d \
+libscp/src/interfaces/csp_if_kiss.d \
 libscp/src/interfaces/csp_if_lo.d \
 libscp/src/transport/csp_rdp.d \
 libscp/src/transport/csp_udp.d \
 main.d \
 mainTask.d \
+MyDrivers/ADT7420.d \
 MyDrivers/clksys_driver.d \
+MyDrivers/pmic_driver.d \
 MyDrivers/port_driver.d \
 MyDrivers/TC_driver.d \
 MyDrivers/twi_master_driver.d \
 MyDrivers/twi_slave_driver.d \
 MyDrivers/usart_driver_RTOS.d \
-spi_memory_25lcxx.d \
+spi_memory_23lcxx.d \
+src/ASF/common/services/sleepmgr/xmega/sleepmgr.d \
 src/ASF/common/services/spi/xmega_spi/spi_master.d \
+src/ASF/xmega/drivers/adc/adc.d \
+src/ASF/xmega/drivers/adc/xmega_aau/adc_aau.d \
 src/ASF/xmega/drivers/spi/spi.d \
 system.d \
 src/ASF/common/services/clock/xmega/sysclk.d \
@@ -297,13 +343,16 @@ src/ASF/xmega/drivers/cpu/ccp.d
 C_DEPS_AS_ARGS +=  \
 cspTask.d \
 csp_interface.d \
+fft_memory.d \
 FreeRTOS/Port/heap_1.d \
 FreeRTOS/Port/port.d \
 FreeRTOS/Source/croutine.d \
+FreeRTOS/Source/event_groups.d \
 FreeRTOS/Source/list.d \
 FreeRTOS/Source/queue.d \
 FreeRTOS/Source/tasks.d \
 FreeRTOS/Source/timers.d \
+libscp/src/arch/freertos/csp_clock.d \
 libscp/src/arch/freertos/csp_malloc.d \
 libscp/src/arch/freertos/csp_queue.d \
 libscp/src/arch/freertos/csp_semaphore.d \
@@ -324,20 +373,27 @@ libscp/src/csp_route.d \
 libscp/src/csp_services.d \
 libscp/src/csp_service_handler.d \
 libscp/src/csp_sfp.d \
+libscp/src/interfaces/csp_if_can.d \
 libscp/src/interfaces/csp_if_i2c.d \
+libscp/src/interfaces/csp_if_kiss.d \
 libscp/src/interfaces/csp_if_lo.d \
 libscp/src/transport/csp_rdp.d \
 libscp/src/transport/csp_udp.d \
 main.d \
 mainTask.d \
+MyDrivers/ADT7420.d \
 MyDrivers/clksys_driver.d \
+MyDrivers/pmic_driver.d \
 MyDrivers/port_driver.d \
 MyDrivers/TC_driver.d \
 MyDrivers/twi_master_driver.d \
 MyDrivers/twi_slave_driver.d \
 MyDrivers/usart_driver_RTOS.d \
-spi_memory_25lcxx.d \
+spi_memory_23lcxx.d \
+src/ASF/common/services/sleepmgr/xmega/sleepmgr.d \
 src/ASF/common/services/spi/xmega_spi/spi_master.d \
+src/ASF/xmega/drivers/adc/adc.d \
+src/ASF/xmega/drivers/adc/xmega_aau/adc_aau.d \
 src/ASF/xmega/drivers/spi/spi.d \
 system.d \
 src/ASF/common/services/clock/xmega/sysclk.d \
@@ -454,101 +510,142 @@ LIB_DEP+=
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ./%.o: .././%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 FreeRTOS/Port/%.o: ../FreeRTOS/Port/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 FreeRTOS/Source/%.o: ../FreeRTOS/Source/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 libscp/src/arch/freertos/%.o: ../libscp/src/arch/freertos/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 libscp/src/crypto/%.o: ../libscp/src/crypto/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 libscp/src/%.o: ../libscp/src/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 libscp/src/interfaces/%.o: ../libscp/src/interfaces/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 libscp/src/transport/%.o: ../libscp/src/transport/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 MyDrivers/%.o: ../MyDrivers/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/common/services/sleepmgr/xmega/%.o: ../src/ASF/common/services/sleepmgr/xmega/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/common/services/spi/xmega_spi/%.o: ../src/ASF/common/services/spi/xmega_spi/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/xmega/drivers/adc/%.o: ../src/ASF/xmega/drivers/adc/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/xmega/drivers/adc/xmega_aau/%.o: ../src/ASF/xmega/drivers/adc/xmega_aau/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/xmega/drivers/spi/%.o: ../src/ASF/xmega/drivers/spi/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/common/services/clock/xmega/%.o: ../src/ASF/common/services/clock/xmega/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/common/services/ioport/xmega/%.o: ../src/ASF/common/services/ioport/xmega/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/xmega/drivers/nvm/%.o: ../src/ASF/xmega/drivers/nvm/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DIOPORT_XMEGA_COMPAT  -I"../AtmelDrivers" -I"../FreeRTOS/Port" -I"../FreeRTOS/Source/include" -I"../FreeRTOS/Source" -I"../FreeRTOS" -I".." -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/Config" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/utils" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/xmega/utils" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/delay" -I"../MyDrivers" -I"../src/ASF/common/boards" -I"../libscp/include/csp" -I"../libscp/include/csp/arch" -I"../libscp/include" -I"../libscp/include/csp/drivers" -I"../libscp/include/csp/interfaces" -I"../src/ASF/xmega/drivers/spi" -I"../src/ASF/common/services/spi/xmega_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc" -I"../libscp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -w -mmcu=atxmega128a4u -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -562,14 +659,14 @@ src/ASF/xmega/drivers/nvm/%.o: ../src/ASF/xmega/drivers/nvm/%.c
 src/ASF/xmega/drivers/nvm/nvm_asm.o: ../src/ASF/xmega/drivers/nvm/nvm_asm.s
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Assembler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c -mmcu=atxmega128a4u -I "../src/ASF/xmega/drivers/cpu" -I "../src/ASF/xmega/drivers/nvm" -I "../src/Config" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/utils" -I "../src/ASF/xmega/utils/preprocessor" -I "../src/ASF/xmega/utils" -I "../src/ASF/common/services/ioport" -I "../src/ASF/common/services/delay" -I "../src/ASF/common/boards" -I "../src/ASF/xmega/drivers/spi" -I "../src/ASF/common/services/spi/xmega_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -mrelax -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c -mmcu=atxmega128a4u -I "../src/ASF/xmega/drivers/cpu" -I "../src/ASF/xmega/drivers/nvm" -I "../src/Config" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/utils" -I "../src/ASF/xmega/utils/preprocessor" -I "../src/ASF/xmega/utils" -I "../src/ASF/common/services/ioport" -I "../src/ASF/common/services/delay" -I "../src/ASF/common/boards" -I "../src/ASF/xmega/drivers/spi" -I "../src/ASF/common/services/spi/xmega_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/xmega/drivers/pmic" -I "../src/ASF/xmega/drivers/sleep" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/xmega/drivers/adc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -mrelax -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/xmega/drivers/cpu/ccp.o: ../src/ASF/xmega/drivers/cpu/ccp.s
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Assembler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c -mmcu=atxmega128a4u -I "../src/ASF/xmega/drivers/cpu" -I "../src/ASF/xmega/drivers/nvm" -I "../src/Config" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/utils" -I "../src/ASF/xmega/utils/preprocessor" -I "../src/ASF/xmega/utils" -I "../src/ASF/common/services/ioport" -I "../src/ASF/common/services/delay" -I "../src/ASF/common/boards" -I "../src/ASF/xmega/drivers/spi" -I "../src/ASF/common/services/spi/xmega_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -mrelax -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c -mmcu=atxmega128a4u -I "../src/ASF/xmega/drivers/cpu" -I "../src/ASF/xmega/drivers/nvm" -I "../src/Config" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/utils" -I "../src/ASF/xmega/utils/preprocessor" -I "../src/ASF/xmega/utils" -I "../src/ASF/common/services/ioport" -I "../src/ASF/common/services/delay" -I "../src/ASF/common/boards" -I "../src/ASF/xmega/drivers/spi" -I "../src/ASF/common/services/spi/xmega_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/xmega/drivers/pmic" -I "../src/ASF/xmega/drivers/sleep" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/xmega/drivers/adc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -mrelax -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -577,14 +674,14 @@ src/ASF/xmega/drivers/cpu/ccp.o: ../src/ASF/xmega/drivers/cpu/ccp.s
 src/ASF/xmega/drivers/nvm/%.o: ../src/ASF/xmega/drivers/nvm/%.s
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Assembler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c -mmcu=atxmega128a4u -I "../src/ASF/xmega/drivers/cpu" -I "../src/ASF/xmega/drivers/nvm" -I "../src/Config" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/utils" -I "../src/ASF/xmega/utils/preprocessor" -I "../src/ASF/xmega/utils" -I "../src/ASF/common/services/ioport" -I "../src/ASF/common/services/delay" -I "../src/ASF/common/boards" -I "../src/ASF/xmega/drivers/spi" -I "../src/ASF/common/services/spi/xmega_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -mrelax -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c -mmcu=atxmega128a4u -I "../src/ASF/xmega/drivers/cpu" -I "../src/ASF/xmega/drivers/nvm" -I "../src/Config" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/utils" -I "../src/ASF/xmega/utils/preprocessor" -I "../src/ASF/xmega/utils" -I "../src/ASF/common/services/ioport" -I "../src/ASF/common/services/delay" -I "../src/ASF/common/boards" -I "../src/ASF/xmega/drivers/spi" -I "../src/ASF/common/services/spi/xmega_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/xmega/drivers/pmic" -I "../src/ASF/xmega/drivers/sleep" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/xmega/drivers/adc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -mrelax -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/xmega/drivers/cpu/%.o: ../src/ASF/xmega/drivers/cpu/%.s
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Assembler : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c -mmcu=atxmega128a4u -I "../src/ASF/xmega/drivers/cpu" -I "../src/ASF/xmega/drivers/nvm" -I "../src/Config" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/utils" -I "../src/ASF/xmega/utils/preprocessor" -I "../src/ASF/xmega/utils" -I "../src/ASF/common/services/ioport" -I "../src/ASF/common/services/delay" -I "../src/ASF/common/boards" -I "../src/ASF/xmega/drivers/spi" -I "../src/ASF/common/services/spi/xmega_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -mrelax -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c -mmcu=atxmega128a4u -I "../src/ASF/xmega/drivers/cpu" -I "../src/ASF/xmega/drivers/nvm" -I "../src/Config" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/utils" -I "../src/ASF/xmega/utils/preprocessor" -I "../src/ASF/xmega/utils" -I "../src/ASF/common/services/ioport" -I "../src/ASF/common/services/delay" -I "../src/ASF/common/boards" -I "../src/ASF/xmega/drivers/spi" -I "../src/ASF/common/services/spi/xmega_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/xmega/drivers/pmic" -I "../src/ASF/xmega/drivers/sleep" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/xmega/drivers/adc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -mrelax -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -605,7 +702,7 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP)
 	@echo Building target: $@
 	@echo Invoking: AVR/GNU Linker : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="main.map" -Wl,-u,vfprintf -Wl,--start-group -Wl,-lm -Wl,-lprintf_flt  -Wl,--end-group -Wl,--gc-sections -mrelax -mmcu=atxmega128a4u  
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-static -Wl,-Map="main.map" -Wl,-u,vfprintf -Wl,--start-group -Wl,-lm -Wl,-lprintf_flt  -Wl,--end-group -Wl,--gc-sections -mrelax -mmcu=atxmega128a4u  
 	@echo Finished building target: $@
 	"C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "main.elf" "main.hex"
 	"C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1056\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "main.elf" "main.eep" || exit 0

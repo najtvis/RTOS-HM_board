@@ -11,13 +11,18 @@
 #ifndef CSPTASK_H_
 #define CSPTASK_H_
 
-extern xQueueHandle * xCSPEventQueue;
+extern QueueHandle_t * xCSPEventQueue;
 
 typedef enum {
 	
 	echoBackEvent = 0,
 	freeHeapEvent = 1,
-	housKeepingEvent = 2
+	housKeepingEvent = 2,
+	processAllEvent = 3,
+	sendSignalEvent = 4,
+	sendFFTEvent = 5,
+	sendSummaryInfoEvent = 6,
+	sendAttenuationEvent = 7
 	
 } eCSPEvent_t;
 
